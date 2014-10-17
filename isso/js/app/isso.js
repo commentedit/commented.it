@@ -167,7 +167,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
                         footer.prepend($.new("span.votes", value));
                     }
                 } else {
-                    if (value === 0) {
+                    if (span !== null && value === 0) {
                         span.remove();
                     } else {
                         span.textContent = value;
