@@ -1,7 +1,11 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 /* Isso – Ich schrei sonst!
  */
-define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n", "app/lib", "app/globals"],
-    function($, utils, config, api, jade, i18n, lib, globals) {
+define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n", "app/lib", "app/globals", "app/edit"],
+    function($, utils, config, api, jade, i18n, lib, globals, edit) {
 
     "use strict";
 
@@ -25,6 +29,9 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
             }
             return true;
         };
+
+        // enable editing the main text when user has started to write a comment
+        $(".textarea", el).on("keyup", edit.init);
 
         // submit form, initialize optional fields with `null` and reset form.
         // If replied to a comment, remove form completely.
