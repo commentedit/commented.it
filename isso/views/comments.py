@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding: utf-8 -*-
 
 from __future__ import unicode_literals
@@ -71,11 +75,11 @@ def xhr(func):
 
 class API(object):
 
-    FIELDS = set(['id', 'parent', 'text', 'author', 'website',
+    FIELDS = set(['id', 'parent', 'text', 'edit', 'author', 'website',
                   'mode', 'created', 'modified', 'likes', 'dislikes', 'hash'])
 
     # comment fields, that can be submitted
-    ACCEPT = set(['text', 'author', 'website', 'email', 'parent'])
+    ACCEPT = set(['text', 'edit', 'author', 'website', 'email', 'parent'])
 
     VIEWS = [
         ('fetch',   ('GET', '/')),
@@ -119,7 +123,7 @@ class API(object):
         if not isinstance(comment.get("parent"), (int, type(None))):
             return False, "parent must be an integer or null"
 
-        for key in ("text", "author", "website", "email"):
+        for key in ("text", "edit", "author", "website", "email"):
             if not isinstance(comment.get(key), (str, type(None))):
                 return False, "%s must be a string or null" % key
 
@@ -149,14 +153,14 @@ class API(object):
         for field in set(data.keys()) - API.ACCEPT:
             data.pop(field)
 
-        for key in ("author", "email", "website", "parent"):
+        for key in ("edit", "author", "email", "website", "parent"):
             data.setdefault(key, None)
 
         valid, reason = API.verify(data)
         if not valid:
             return BadRequest(reason)
 
-        for field in ("author", "email", "website"):
+        for field in ("edit", "author", "email", "website"):
             if data.get(field) is not None:
                 data[field] = cgi.escape(data[field])
 
@@ -247,7 +251,7 @@ class API(object):
         if "text" not in data or data["text"] is None or len(data["text"]) < 3:
             raise BadRequest("no text given")
 
-        for key in set(data.keys()) - set(["text", "author", "website"]):
+        for key in set(data.keys()) - set(["text", "edit", "author", "website"]):
             data.pop(key)
 
         data['modified'] = time.time()
@@ -441,6 +445,7 @@ class API(object):
         if plain:
             for item in fetched_list:
                 item['text'] = self.isso.render(item['text'])
+                item['edit'] = self.isso.render(item['edit']) 
 
         return fetched_list
 

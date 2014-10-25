@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding: utf-8 -*-
 
 from __future__ import unicode_literals
@@ -93,6 +97,10 @@ class SMTP(object):
         rv.write(author + " wrote:\n")
         rv.write("\n")
         rv.write(comment["text"] + "\n")
+
+        if comment["edit"]:
+            rv.write("\nand edited the article text.\n")
+
         rv.write("\n")
 
         if comment["website"]:

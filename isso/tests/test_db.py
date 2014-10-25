@@ -87,7 +87,7 @@ class TestDBMigration(unittest.TestCase):
                         "    id INTEGER PRIMARY KEY,"
                         "    parent INTEGER,"
                         "    created FLOAT NOT NULL, modified FLOAT,"
-                        "    text VARCHAR, email VARCHAR, website VARCHAR,"
+                        "    text VARCHAR, edit VARCHAR, email VARCHAR, website VARCHAR,"
                         "    mode INTEGER,"
                         "    remote_addr VARCHAR,"
                         "    likes INTEGER DEFAULT 0,"

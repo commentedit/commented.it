@@ -1,3 +1,7 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 # -*- encoding: utf-8 -*-
 
 import time
@@ -17,10 +21,16 @@ class Comments:
         +-----------------+-----------------+--------+-----+--------+-------------+
 
     The tuple (tid, id) is unique and thus primary key.
+
+    The text field contains the comment text (cannot be empty unless the comment
+    has been removed.
+    The edit field contains the new article text if it has been changed and None
+    otherwise.
+    Maybe it will later be changed to contain a patch.
     """
 
     fields = ['tid', 'id', 'parent', 'created', 'modified', 'mode', 'remote_addr',
-              'text', 'author', 'email', 'website', 'likes', 'dislikes', 'voters']
+              'text', 'edit', 'author', 'email', 'website', 'likes', 'dislikes', 'voters']
 
     def __init__(self, db):
 
@@ -29,7 +39,7 @@ class Comments:
             'CREATE TABLE IF NOT EXISTS comments (',
             '    tid REFERENCES threads(id), id INTEGER PRIMARY KEY, parent INTEGER,',
             '    created FLOAT NOT NULL, modified FLOAT, mode INTEGER, remote_addr VARCHAR,',
-            '    text VARCHAR, author VARCHAR, email VARCHAR, website VARCHAR,',
+            '    text VARCHAR, edit VARCHAR, author VARCHAR, email VARCHAR, website VARCHAR,',
             '    likes INTEGER DEFAULT 0, dislikes INTEGER DEFAULT 0, voters BLOB NOT NULL);'])
 
     def add(self, uri, c):
@@ -47,15 +57,15 @@ class Comments:
             'INSERT INTO comments (',
             '    tid, parent,'
             '    created, modified, mode, remote_addr,',
-            '    text, author, email, website, voters )',
+            '    text, edit, author, email, website, voters )',
             'SELECT',
             '    threads.id, ?,',
             '    ?, ?, ?, ?,',
-            '    ?, ?, ?, ?, ?',
+            '    ?, ?, ?, ?, ?, ?',
             'FROM threads WHERE threads.uri = ?;'], (
             c.get('parent'),
             c.get('created') or time.time(), None, c["mode"], c['remote_addr'],
-            c['text'], c.get('author'), c.get('email'), c.get('website'), buffer(
+            c['text'], c.get('edit'), c.get('author'), c.get('email'), c.get('website'), buffer(
                 Bloomfilter(iterable=[c['remote_addr']]).array),
             uri)
         )
@@ -160,7 +170,7 @@ class Comments:
 
         self.db.execute('UPDATE comments SET text=? WHERE id=?', ('', id))
         self.db.execute('UPDATE comments SET mode=? WHERE id=?', (4, id))
-        for field in ('author', 'website'):
+        for field in ('edit', 'author', 'website'):
             self.db.execute('UPDATE comments SET %s=? WHERE id=?' % field, (None, id))
 
         self._remove_stale()

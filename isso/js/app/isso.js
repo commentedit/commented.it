@@ -50,8 +50,11 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
             api.create($("#isso-thread").getAttribute("data-isso-id"), {
                 author: author, email: email, website: website,
+                // text: the text of the comment
                 text: utils.text($(".textarea", el).innerHTML),
-                parent: parent || null
+                parent: parent || null,
+                // article: the new article if it has been modified, null otherwise
+                article: edit.new_article
             }).then(function(comment) {
                 $(".textarea", el).innerHTML = "";
                 $(".textarea", el).blur();
