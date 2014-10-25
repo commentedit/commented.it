@@ -32,7 +32,7 @@ define(["app/dom", "app/i18n"], function($, i18n) {
 
     return {
         init: init,
-        new_article: new_article
+        new_article: function() {return new_article;}
     };
 });
 
