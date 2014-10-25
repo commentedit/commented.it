@@ -445,7 +445,6 @@ class API(object):
         if plain:
             for item in fetched_list:
                 item['text'] = self.isso.render(item['text'])
-                item['edit'] = self.isso.render(item['edit']) 
 
         return fetched_list
 
