@@ -30,9 +30,21 @@ define(["app/dom", "app/i18n"], function($, i18n) {
         }
     };
 
+    var cancel = function() {
+        if (mode == "commenting") {
+            article.setAttribute("contenteditable", false);
+            if (new_article != null) {
+                article.innerHTML = original_article;
+                new_article = null;
+            }
+            mode = "reading";
+        }
+    }
+
     return {
         init: init,
-        new_article: function() {return new_article;}
+        new_article: function() {return new_article;},
+        cancel: cancel
     };
 });
 
