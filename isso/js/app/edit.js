@@ -12,8 +12,13 @@ define(["app/dom", "app/i18n"], function($, i18n) {
     var original_article = article.innerHTML;
     var new_article = null;
 
+    var original_button = $.htmlify("<button>" + i18n.translate("show-original") + "</button>");
+    original_button.on("click", show_original);
+    original_button.hide();
+    article.insertAfter(original_button);
+ 
     var init = function() {
-        if (mode == "reading") {
+        if (mode === "reading") {
             mode = "commenting";
             article.setAttribute("contenteditable", true);
             article.on("keyup", maybe_article_just_changed);
@@ -22,7 +27,7 @@ define(["app/dom", "app/i18n"], function($, i18n) {
 
     var maybe_article_just_changed = function() {
         var current = article.innerHTML;
-        if (current != original_article) {
+        if (current !== original_article) {
             new_article = current;
         }
         else {
@@ -31,20 +36,38 @@ define(["app/dom", "app/i18n"], function($, i18n) {
     };
 
     var cancel = function() {
-        if (mode == "commenting") {
+        if (mode === "commenting") {
             article.setAttribute("contenteditable", false);
-            if (new_article != null) {
+            if (new_article !== null) {
                 article.innerHTML = original_article;
                 new_article = null;
             }
             mode = "reading";
         }
-    }
+    };
+
+    var show = function(comment) {
+        // let's curry!
+        return function() {
+            if (mode === "reading") {
+                article.innerHTML = comment.edit;
+                original_button.show();
+            }
+        };
+    };
+
+    var show_original = function() {
+        if (mode === "reading") {
+            article.innerHTML = original_article;
+            original_button.hide();
+        }
+    };
 
     return {
         init: init,
         new_article: function() {return new_article;},
-        cancel: cancel
+        cancel: cancel,
+        show: show
     };
 });
 
