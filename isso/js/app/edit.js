@@ -13,10 +13,7 @@ define(["app/dom", "app/i18n"], function($, i18n) {
     var new_article = null;
 
     var original_button = $.htmlify("<button>" + i18n.translate("show-original") + "</button>");
-    original_button.on("click", show_original);
-    original_button.hide();
-    article.insertAfter(original_button);
- 
+
     var init = function() {
         if (mode === "reading") {
             mode = "commenting";
@@ -62,6 +59,10 @@ define(["app/dom", "app/i18n"], function($, i18n) {
             original_button.hide();
         }
     };
+
+    original_button.on("click", show_original);
+    original_button.hide();
+    article.insertAfter(original_button);
 
     return {
         init: init,
