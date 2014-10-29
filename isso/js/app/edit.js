@@ -47,7 +47,7 @@ define(["app/dom", "app/i18n"], function($, i18n) {
         // let's curry!
         return function() {
             if (mode === "reading") {
-                article.innerHTML = comment.edit;
+                article.innerHTML = comment.edit.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
                 original_button.show();
             }
         };
@@ -66,7 +66,7 @@ define(["app/dom", "app/i18n"], function($, i18n) {
 
     return {
         init: init,
-        new_article: function() {return new_article;},
+        new_article: function() {return new_article.replace(/&lt;/g, "<").replace(/&gt;/g, ">");},
         cancel: cancel,
         show: show
     };
