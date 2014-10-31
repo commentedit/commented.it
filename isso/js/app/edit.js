@@ -50,8 +50,8 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
         // let's curry!
         return function() {
             if (mode === "reading") {
-                var html = dmp.diff_prettyHtml(JSON.parse(comment.edit));
-                html = html.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+                var array = JSON.parse(comment.edit.replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
+                var html = dmp.diff_prettyHtml(array);
                 article.innerHTML = html;
 		original_button.show();
             }
@@ -73,6 +73,7 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
         init: init,
         new_article: function() {
             var new_text = new_article.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            new_text = new_text.replace(/\n/g, "").replace(/\t/g, "");
             return JSON.stringify(dmp.diff_main(original_article,new_text));
         },
         cancel: cancel,
