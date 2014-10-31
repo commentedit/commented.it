@@ -24,9 +24,8 @@ class Comments:
 
     The text field contains the comment text (cannot be empty unless the comment
     has been removed.
-    The edit field contains the new article text if it has been changed and None
-    otherwise.
-    Maybe it will later be changed to contain a patch.
+    The edit field contains an array of diffs if the main article has changed and None
+    otherwise but for simplicity the conversion from array to string is done client-side.
     """
 
     fields = ['tid', 'id', 'parent', 'created', 'modified', 'mode', 'remote_addr',
