@@ -50,8 +50,10 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
         // let's curry!
         return function() {
             if (mode === "reading") {
-                article.innerHTML = comment.edit.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-                original_button.show();
+                var html = dmp.diff_prettyHtml(comment.edit)
+                html = html.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+                article.innerHTML = html;
+		original_button.show();
             }
         };
     };
@@ -69,7 +71,10 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
 
     return {
         init: init,
-        new_article: function() {return new_article.replace(/&lt;/g, "<").replace(/&gt;/g, ">");},
+        new_article: function() {
+            var new_text = new_article.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+            return dmp.diff_main(original_article,new_text);
+        },
         cancel: cancel,
         show: show
     };
