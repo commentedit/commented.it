@@ -1,6 +1,6 @@
 var requirejs = {
     paths: {
-        "diff_match_patch": "lib/diff_match_patch/diff_match_patch",
+        "diff_match_patch": "lib/diff_match_patch/diff_match_patch_uncompressed",
         "text": "components/requirejs-text/text",
         "jade": "lib/requirejs-jade/jade",
         "libjs-jade": "components/jade/jade",
