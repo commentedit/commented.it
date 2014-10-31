@@ -74,6 +74,7 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
         new_article: function() {
             var new_text = new_article.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
             new_text = new_text.replace(/\n/g, "").replace(/\t/g, "");
+            original_article = original_article.replace(/\n/g, "").replace(/\t/g, "");
             return JSON.stringify(dmp.diff_main(original_article,new_text));
         },
         cancel: cancel,
