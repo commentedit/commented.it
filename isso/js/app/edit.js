@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n"], function($, i18n) {
+define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
 
     "use strict";
 
@@ -13,6 +13,9 @@ define(["app/dom", "app/i18n"], function($, i18n) {
     var new_article = null;
 
     var original_button = $.htmlify("<button>" + i18n.translate("show-original") + "</button>");
+
+    // make a diff_match_patch object once and for all
+    var dmp = new diff_match_patch();
 
     var init = function() {
         if (mode === "reading") {
