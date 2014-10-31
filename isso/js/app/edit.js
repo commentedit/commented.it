@@ -52,7 +52,7 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
             if (mode === "reading") {
                 var array = JSON.parse(comment.edit.replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
                 var html = dmp.diff_prettyHtml(array);
-                article.innerHTML = html;
+                article.innerHTML = html.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 		original_button.show();
             }
         };
