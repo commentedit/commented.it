@@ -3,13 +3,13 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
+define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18n, utils) {
 
     "use strict";
 
     var mode = "reading";
     var article = $("article");
-    var original_article = article.innerHTML;
+    var original_article = utils.clean_html(article.innerHTML);
     var new_article = null;
 
     var original_button = $.htmlify("<button>" + i18n.translate("show-original") + "</button>");
@@ -34,7 +34,7 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
     };
 
     var maybe_article_just_changed = function() {
-        var current = article.innerHTML;
+        var current = utils.clean_html(article.innerHTML);
         if (current !== original_article) {
             new_article = current;
         }
@@ -58,9 +58,9 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
         // let's curry!
         return function() {
             if (mode === "reading" || mode === "reading_modification") {
-                var array = JSON.parse(comment.edit.replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
+                var array = JSON.parse(utils.tags_from_text(comment.edit));
                 var html = dmp.diff_prettyHtml(array);
-                article.innerHTML = html.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+                article.innerHTML = utils.tags_from_text(html);
 		original_button.show();
                 mode = "reading_modification";
             }
@@ -82,9 +82,7 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
     return {
         init: init,
         new_article: function() {
-            var new_text = new_article.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-            new_text = new_text.replace(/\n/g, "").replace(/\t/g, "");
-            original_article = original_article.replace(/\n/g, "").replace(/\t/g, "");
+            var new_text = utils.tags_from_text(new_article);
             return JSON.stringify(dmp.diff_main(original_article,new_text));
         },
         cancel: cancel,

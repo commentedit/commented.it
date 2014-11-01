@@ -1,3 +1,7 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+* License, v. 2.0. If a copy of the MPL was not distributed with this
+* file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
 define(["app/i18n"], function(i18n) {
     "use strict";
 
@@ -68,11 +72,21 @@ define(["app/i18n"], function(i18n) {
                    .replace(/\n/gi, '<br>');
     };
 
+    var clean_html = function(html) {
+        return html.replace(/\n/g, "").replace(/\t/g, "");
+    };
+
+    var tags_from_text = function(text) {
+        return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
+    };
+
     return {
         cookie: cookie,
         pad: pad,
         ago: ago,
         text: text,
-        detext: detext
+        detext: detext,
+        clean_html: clean_html,
+        tags_from_text: tags_from_text
     };
 });
