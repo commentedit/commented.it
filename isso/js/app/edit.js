@@ -60,7 +60,13 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 var array = JSON.parse(utils.tags_from_text(comment.edit));
                 var html = dmp.diff_prettyHtml(array);
                 article.innerHTML = utils.tags_from_text(html);
+
+                // gray mask on everything other than current comment and article text
+                $("body").style.background = "gray";
+                article.style.background = "white";
+                
 		original_button.show();
+
                 mode = "reading_modification";
             }
         };
