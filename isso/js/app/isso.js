@@ -325,7 +325,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
         // by clicking on the comment, a reader can see the associated edit
         if (comment.edit !== null) {
-            el.on("click", edit.show(comment));
+            el.on("click", edit.show(el, comment));
         }
 
     };
