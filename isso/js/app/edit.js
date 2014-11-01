@@ -17,12 +17,20 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
     // make a diff_match_patch object once and for all
     var dmp = new diff_match_patch();
 
-    var init = function() {
-        if (mode === "reading") {
-            mode = "commenting";
-            article.setAttribute("contenteditable", true);
-            article.on("keyup", maybe_article_just_changed);
-        }
+    var init = function(comment_field) {
+        // let's curry!
+        return function() {
+            if (mode === "reading" && comment_field.innerHTML !== "") {
+                mode = "commenting";
+                article.setAttribute("contenteditable", true);
+                article.on("keyup", maybe_article_just_changed);
+            }
+            else if (mode === "commenting" && comment_field.innerHTML === ""
+                                           && new_article === null) {
+                mode = "reading";
+                article.setAttribute("contenteditable", false);
+            }
+        };
     };
 
     var maybe_article_just_changed = function() {

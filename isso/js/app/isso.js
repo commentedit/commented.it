@@ -31,7 +31,8 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
         };
 
         // enable editing the main text when user has started to write a comment
-        $(".textarea", el).on("keyup", edit.init);
+        var comment_field = $(".textarea", el);
+        comment_field.on("keyup", edit.init(comment_field));
 
         // submit form, initialize optional fields with `null` and reset form.
         // If replied to a comment, remove form completely.
