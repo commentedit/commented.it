@@ -23,7 +23,6 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
                 article.setAttribute("contenteditable", true);
-                article.on("keyup", maybe_article_just_changed);
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
                                            && new_article === null) {
@@ -75,7 +74,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         }
     };
 
+    // define events
     original_button.on("click", show_original);
+    article.on("keyup", maybe_article_just_changed);
+
+    // add html elements
     original_button.hide();
     article.insertAfter(original_button);
 
