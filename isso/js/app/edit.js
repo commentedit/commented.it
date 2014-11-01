@@ -49,19 +49,21 @@ define(["app/dom", "app/i18n", "diff_match_patch"], function($, i18n) {
     var show = function(comment) {
         // let's curry!
         return function() {
-            if (mode === "reading") {
+            if (mode === "reading" || mode === "reading_modification") {
                 var array = JSON.parse(comment.edit.replace(/&lt;/g, "<").replace(/&gt;/g, ">"));
                 var html = dmp.diff_prettyHtml(array);
                 article.innerHTML = html.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
 		original_button.show();
+                mode = "reading_modification";
             }
         };
     };
 
     var show_original = function() {
-        if (mode === "reading") {
+        if (mode === "reading_modification") {
             article.innerHTML = original_article;
             original_button.hide();
+            mode = "reading";
         }
     };
 
