@@ -20,6 +20,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     var init = function(comment_field) {
         // let's curry!
         return function() {
+            show_original();
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
                 article.setAttribute("contenteditable", true);
