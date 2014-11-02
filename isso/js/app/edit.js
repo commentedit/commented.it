@@ -103,7 +103,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         init: init,
         new_article: function() {
             var new_text = utils.tags_from_text(new_article);
-            return JSON.stringify(dmp.diff_main(original_article,new_text));
+            var diffs = dmp.diff_main(original_article, new_text);
+            dmp.diff_cleanupSemantic(diffs);
+            return JSON.stringify(diffs);
         },
         cancel: cancel,
         show: show
