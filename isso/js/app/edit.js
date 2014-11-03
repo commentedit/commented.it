@@ -69,7 +69,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     // print diffs
                     var array = JSON.parse(utils.tags_from_text(comment.edit));
                     var html = dmp.diff_prettyHtml(array);
-                    article.innerHTML = utils.tags_from_text(html);
+                    article.innerHTML = html;
 
                     // add button to go back to standard reading mode
                     original_button.show();
