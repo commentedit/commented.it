@@ -102,6 +102,10 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     return {
         init: init,
         new_article: function() {
+            if (new_article === null) {
+                return null;
+            }
+            // otherwise we apply some pre-treatment before returning
             var new_text = utils.tags_from_text(new_article);
             var diffs = dmp.diff_main(original_article, new_text);
             dmp.diff_cleanupSemantic(diffs);
