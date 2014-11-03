@@ -7,7 +7,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     "use strict";
 
+    // mode can take values "reading", "reading_modification" and "commenting"
     var mode = "reading";
+    // if mode is "reading_modification", currently_showing stores id of comment
+    var currently_showing;
+
     var article = $("article");
     var original_article = utils.clean_html(article.innerHTML);
     var new_article = null;
@@ -58,22 +62,28 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         // let's curry!
         return function() {
             if (mode === "reading" || mode === "reading_modification") {
-                // print diffs
-                var array = JSON.parse(utils.tags_from_text(comment.edit));
-                var html = dmp.diff_prettyHtml(array);
-                article.innerHTML = utils.tags_from_text(html);
-
-                // add button to go back to standard reading mode
-		original_button.show();
-
-                // display selected comment in green and all others are set back to default
-                var comments = $(".isso-comment", null, false);
-                for (var i = 0; i < comments.length; i++) {
-                    comments[i].style.background = "transparent";
+                if (currently_showing === comment.id) {
+                    show_original();
                 }
-                el.style.background = "#e6ffe6";
+                else {
+                    // print diffs
+                    var array = JSON.parse(utils.tags_from_text(comment.edit));
+                    var html = dmp.diff_prettyHtml(array);
+                    article.innerHTML = utils.tags_from_text(html);
 
-                mode = "reading_modification";
+                    // add button to go back to standard reading mode
+                    original_button.show();
+
+                    // display selected comment in green and all others are set back to default
+                    var comments = $(".isso-comment", null, false);
+                    for (var i = 0; i < comments.length; i++) {
+                        comments[i].style.background = "transparent";
+                    }
+                    el.style.background = "#e6ffe6";
+
+                    mode = "reading_modification";
+                    currently_showing = comment.id;
+                }
             }
         };
     };
@@ -88,6 +98,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 comments[i].style.background = "transparent";
             }
             mode = "reading";
+            currently_showing = null;
         }
     };
 
