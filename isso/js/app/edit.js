@@ -44,7 +44,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     });
                 }
                 else {
-                  cancel_button.show();
+                  cancel_button.style.display = "inline";
                 }
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
