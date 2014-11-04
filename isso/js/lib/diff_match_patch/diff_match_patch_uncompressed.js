@@ -1219,16 +1219,32 @@ diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
  * @return {string} HTML representation.
  */
 diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
+  // adapt because diffs can include html tags
+  var mark = function(open, text, close) {
+    var output = [];
+    var tag = /(<\/?[a-zA-Z]*>)/;
+    var text_and_tags = text.split(tag);
+    for (var i = 0; i < text_and_tags.length; i++) {
+      var current_text = text_and_tags[i];
+      if (tag.test(current_text)) {
+        output[i] = current_text;
+      }
+      else {
+        output[i] = open + current_text + close;
+      }
+    }
+    return output.join('');
+  };
   var html = [];
   for (var x = 0; x < diffs.length; x++) {
     var op = diffs[x][0];    // Operation (insert, delete, equal)
     var text = diffs[x][1];  // Text of change.
     switch (op) {
       case DIFF_INSERT:
-        html[x] = '<ins style="background:#e6ffe6;">' + text + '</ins>';
+        html[x] = mark('<ins style="background:#e6ffe6;">', text, '</ins>');
         break;
       case DIFF_DELETE:
-        html[x] = '<del style="background:#ffe6e6;">' + text + '</del>';
+        html[x] = mark('<del style="background:#ffe6e6;">', text, '</del>');
         break;
       case DIFF_EQUAL:
         html[x] = text;
