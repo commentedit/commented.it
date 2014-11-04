@@ -21,11 +21,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // make a diff_match_patch object once and for all
     var dmp = new diff_match_patch();
 
-    // will contain buttons for commenting area
-    var cancel_button;
+    // remember some of the DOM elements
+    var cancel_button, comment_field;
 
     var init = function(comment_postbox) {
-        var comment_field = $(".textarea", comment_postbox);
+        comment_field = $(".textarea", comment_postbox);
         // let's curry!
         return function() {
             show_original();
@@ -49,8 +49,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
                                            && new_article === null) {
-                mode = "reading";
-                article.setAttribute("contenteditable", false);
+                cancel();
             }
         };
     };
@@ -62,6 +61,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         }
         else {
             new_article = null;
+            if (comment_field.innerHTML === "") {
+                cancel();
+            }
         }
     };
 
