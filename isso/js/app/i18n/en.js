@@ -3,6 +3,8 @@ define({
     "postbox-author": "Name (optional)",
     "postbox-email": "E-mail (optional)",
     "postbox-website": "Website (optional)",
+    "postbox-cancel": "Cancel",
+    "postbox-confirm-cancel": "This will cancel your comment and your edit. Are you sure?",
     "postbox-submit": "Submit",
 
     "num-comments": "One Comment\n{{ n }} Comments",

@@ -21,13 +21,28 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // make a diff_match_patch object once and for all
     var dmp = new diff_match_patch();
 
-    var init = function(comment_field) {
+    // will contain buttons for commenting area
+    var cancel_button;
+
+    var init = function(comment_postbox) {
+        var comment_field = $(".textarea", comment_postbox);
         // let's curry!
         return function() {
             show_original();
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
                 article.setAttribute("contenteditable", true);
+                // first time : create cancel button and associate event
+                if (!cancel_button) {
+                    cancel_button = $(".post-action", comment_postbox).prepend(
+                      '<input type="reset" value="' + i18n.translate("postbox-cancel") + '"></input>');
+                    cancel_button.on("click", function(e) {
+                        if (confirm(i18n.translate("postbox-confirm-cancel"))) {
+                            comment_field.innerHTML = "";
+                            cancel();
+                        }
+                    });
+                }
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
                                            && new_article === null) {
