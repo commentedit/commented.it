@@ -36,6 +36,9 @@ define(function() {
             if (prevent === undefined || prevent) {
                 event.preventDefault();
             }
+            // Hack: prevent propagation here
+            // Because one click = one action
+            event.stopPropagation();
         });
     };
 
