@@ -3,6 +3,8 @@ define({
     "postbox-author": "Nom (optionnel)",
     "postbox-email": "Courriel (optionnel)",
     "postbox-website": "Site web (optionnel)",
+    "postbox-cancel": "Annuler",
+    "postbox-confirm-cancel": "Cela annulera votre commentaire ainsi que votre modification. Continuer ?",
     "postbox-submit": "Soumettre",
     "num-comments": "{{ n }} commentaire\n{{ n }} commentaires",
     "no-comments": "Aucun commentaire pour l'instant",
@@ -23,5 +25,6 @@ define({
     "date-day": "Hier\nIl y a {{ n }} jours",
     "date-week": "Il y a une semaine\nIl y a {{ n }} semaines",
     "date-month": "Il y a un mois\nIl y a {{ n }} mois",
-    "date-year": "Il y a un an\nIl y a {{ n }} ans"
+    "date-year": "Il y a un an\nIl y a {{ n }} ans",
+    "show-original": "Afficher l'original"
 });
