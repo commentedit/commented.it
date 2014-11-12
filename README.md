@@ -1,4 +1,4 @@
-commented.it
+![commented.it](http://unkilodeplumes.fr/images/commentedit.png)
 ============
 
 A comment and edit system which can be integrated into any website or blog.
