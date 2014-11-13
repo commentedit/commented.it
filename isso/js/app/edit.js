@@ -129,6 +129,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // define events
     original_button.on("click", show_original);
     article.on("keyup", maybe_article_just_changed);
+    document.addEventListener("keydown", function(e) {
+        if (e.keyCode === 27) {
+            show_original();
+        }
+    });
 
     // add html elements
     original_button.hide();
