@@ -57,7 +57,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
                 text: utils.text($(".textarea", el).innerHTML),
                 parent: parent || null,
                 // edit: the new article if it has been modified, null otherwise
-                edit: edit.new_article().replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+                edit: edit.new_article()
             }).then(function(comment) {
                 $(".textarea", el).innerHTML = "";
                 $(".textarea", el).blur();
