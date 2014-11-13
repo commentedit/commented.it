@@ -102,6 +102,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     }
                     el.style.background = "#e6ffe6";
 
+                    // scroll to first change
+                    $("#edit").scrollIntoView();
+
                     mode = "reading_modification";
                     currently_showing = comment.id;
                 }

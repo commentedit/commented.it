@@ -1220,6 +1220,8 @@ diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
  */
 diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
   // adapt because diffs can include html tags
+  // also: add #id to first change
+  var is_first_change = 1;
   var mark = function(open, text, close) {
     var output = [];
     var tag = /(<\/?[a-zA-Z]*>)/;
@@ -1230,7 +1232,14 @@ diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
         output[i] = current_text;
       }
       else {
-        output[i] = open + current_text + close;
+        // add id to first change
+        if (is_first_change) {
+          output[i] = open.replace(/<(.*)>/, '<$1' + ' id="edit">') + current_text + close;
+          is_first_change = 0;
+        }
+        else {
+          output[i] = open + current_text + close;
+        }
       }
     }
     return output.join('');
