@@ -128,7 +128,7 @@ class Comments:
             order_by = 'id'
         sql.append('ORDER BY ')
         sql.append(order_by)
-        sql.append(' DESC')
+        sql.append(' ASC')
 
         if limit:
             sql.append('LIMIT ?')
