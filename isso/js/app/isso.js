@@ -337,6 +337,8 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
         // by clicking on the comment, a reader can see the associated edit
         if (comment.edit !== null) {
+            // change cursor to indicate that the comment is clickable
+            el.style.cursor = "pointer";
             el.on("click", edit.show(el, comment));
         }
 
