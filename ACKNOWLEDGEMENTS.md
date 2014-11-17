@@ -35,7 +35,7 @@ Original copyright and permission notice
 Google-Diff-Match-Patch
 =======================
 
-This software uses the
+This software uses a modified version of the
 [google-diff-match-patch library](https://code.google.com/p/google-diff-match-patch/)
 which is available under the Apache License 2.0.
 
