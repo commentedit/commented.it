@@ -6,6 +6,7 @@ A comment and edit system which can be integrated into any website or blog.
 Installation
 ------------
 
+commented.it is built upon Isso.
 If you can follow the instructions for installing from source on the official Isso documentation
 (http://posativ.org/isso/docs/install/#install-from-source and http://posativ.org/isso/docs/quickstart/),
 you should be able to install commented.it as well. Start with:
