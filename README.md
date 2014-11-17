@@ -3,6 +3,11 @@
 
 A comment and edit system which can be integrated into any website or blog.
 
+Installation
+------------
+
+If you can follow the instructions to install from source on the official Isso documentation
+
 License
 -------
 
