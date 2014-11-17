@@ -6,7 +6,13 @@ A comment and edit system which can be integrated into any website or blog.
 Installation
 ------------
 
-If you can follow the instructions to install from source on the official Isso documentation
+If you can follow the instructions for installing from source on the official Isso documentation
+(http://posativ.org/isso/docs/install/#install-from-source and http://posativ.org/isso/docs/quickstart/),
+you should be able to install commented.it as well. Start with:
+```
+git clone https://github.com/unkilodeplumes/commented.it
+```
+Just note that the editable content on a page must be wrapped by ```<article></article>``` tags.
 
 License
 -------
