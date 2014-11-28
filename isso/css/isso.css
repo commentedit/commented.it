@@ -176,6 +176,12 @@
     max-width: 25%;
     margin: 0;
 }
+
+#isso-thread button {
+    cursor: pointer;
+}
+
+#isso-thread button,
 .isso-postbox > .form-wrapper > .auth-section .input-wrapper input {
     padding: .3em 10px;
     max-width: 100%;
