@@ -16,7 +16,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     var original_article = utils.clean_html(article.innerHTML);
     var new_article = null;
 
-    var original_button = $.htmlify("<button>" + i18n.translate("show-original") + "</button>");
+    var original_button = $.htmlify('<button type="button">' + i18n.translate("show-original") + '</button>');
 
     // make a diff_match_patch object once and for all
     var dmp = new diff_match_patch();
