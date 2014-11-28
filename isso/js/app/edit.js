@@ -137,7 +137,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     // add html elements
     original_button.hide();
-    article.insertAfter(original_button);
+    $("#isso-thread").prepend(original_button);
 
     return {
         init: init,
