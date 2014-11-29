@@ -6,6 +6,8 @@ A comment and edit system which can be integrated into any website or blog.
 Installation
 ------------
 
+###Generic instructions
+
 commented.it is built upon Isso.
 If you can follow the instructions for installing from source on the official Isso documentation
 (http://posativ.org/isso/docs/install/#install-from-source and http://posativ.org/isso/docs/quickstart/),
@@ -14,6 +16,12 @@ you should be able to install commented.it as well. Start with:
 git clone https://github.com/unkilodeplumes/commented.it
 ```
 Just note that the editable content on a page must be wrapped by ```<article></article>``` tags.
+
+###Specific step-by-step instructions for installing on OpenShift
+
+There is a [wiki page](wiki/How-to-install-on-OpenShift) containing detailed instructions for running
+commented.it on OpenShift.
+If you just want it running somewhere without getting a headache, this might be just what you need.
 
 License
 -------
