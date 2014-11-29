@@ -15,11 +15,11 @@ you should be able to install commented.it as well. Start with:
 ```
 git clone https://github.com/unkilodeplumes/commented.it
 ```
-Just note that the editable content on a page must be wrapped by ```<article></article>``` tags.
+Just note that the editable content on a page must be wrapped inside ```<article></article>``` tags.
 
 ###Specific step-by-step instructions for installing on OpenShift
 
-There is a [wiki page](wiki/How-to-install-on-OpenShift) containing detailed instructions for running
+There is a [wiki page](https://github.com/unkilodeplumes/commented.it/wiki/How-to-install-on-OpenShift) containing detailed instructions for running
 commented.it on OpenShift.
 If you just want it running somewhere without getting a headache, this might be just what you need.
 
@@ -29,7 +29,7 @@ License
 Copyright 2014, Jules and Théo Zimmermann and others.
 
 This software is a **free software** available under the terms of the MPL 2.0 (Mozilla Public License 2.0).
-The text of the license is provided in the LICENSE file.
+The text of the license is provided in the [LICENSE](LICENSE) file.
 
 If you don't know what the MPL 2.0 is, then we suggest you have a look at the
 [official FAQ](https://www.mozilla.org/MPL/2.0/FAQ.html).
@@ -38,7 +38,7 @@ Acknowledgements
 ----------------
 
 This software is built upon several other open-source software or libraries.
-Please refer to the ACKNOWLEDGEMENTS.md file for the list,
+Please refer to the [ACKNOWLEDGEMENTS.md](ACKNOWLEDGEMENTS.md) file for the list,
 original copyright notices and licenses.
 
 
