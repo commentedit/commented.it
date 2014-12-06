@@ -227,3 +227,8 @@
         text-align: right;
     }
 }
+
+#isso-root {
+    overflow: auto;
+    height: calc(100% - 250px);
+}
