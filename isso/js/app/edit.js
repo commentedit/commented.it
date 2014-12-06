@@ -93,7 +93,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     article.innerHTML = html;
 
                     // add button to go back to standard reading mode
-                    original_button.show();
+                    original_button.style.visibility = "visible";
 
                     // display selected comment in green and all others are set back to default
                     var comments = $(".isso-comment", null, false);
@@ -116,7 +116,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         if (mode === "reading_modification") {
             // restore original display
             article.innerHTML = original_article;
-            original_button.hide();
+            original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
                 comments[i].style.background = "transparent";
@@ -136,7 +136,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     });
 
     // add html elements
-    original_button.hide();
+    original_button.style.visibility = "hidden";
     $("#isso-thread").prepend(original_button);
 
     return {
