@@ -13,7 +13,7 @@ function position(page_element_id) {
     this.column = function() {
         page.style.marginLeft = "5%";
         isso.style.position = "fixed";
-        isso.style.left = "calc(" + page.offsetWidth + "px + 5%)";
+        isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
     };
 
     this.basic = function() {
