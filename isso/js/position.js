@@ -18,9 +18,11 @@ function position(page_element_id, default_mode) {
             isso.style.position = "fixed";
         }
         else {
-            page.addEventListener("transitionend", function() {
+            var handler = function() {
                 isso.style.position = "fixed";
-            });
+                page.removeEventListener("transitionend", handler);
+            };
+            page.addEventListener("transitionend", handler);
         }
         page.style.marginLeft = "5%";
         isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
