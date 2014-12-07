@@ -3,13 +3,14 @@
 * License, v. 2.0. If a copy of the MPL was not distributed with this
 * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-function position(page_element_id) {
+function position(page_element_id, default_mode) {
 
     "use strict";
 
+    /* Default mode can be "basic" or "column" */
+
     var page = document.getElementById(page_element_id);
     var isso = document.getElementById("isso-thread");
-    page.style.transition = "margin-left 1s";
 
     this.column = function() {
         page.style.marginLeft = "5%";
@@ -18,11 +19,19 @@ function position(page_element_id) {
     };
 
     this.basic = function() {
-        page.style.marginLeft = "auto";
-        page.style.marginRight = "auto";
+        page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2;
         isso.style.position = "static";
     };
 
+    /* Switch to default mode before setting transition */
+    if (default_mode == "column") {
+        this.column();
+    }
+    else {
+        this.basic();
+    }
+
+    page.style.transition = "margin-left 1s";
 };
 
 
