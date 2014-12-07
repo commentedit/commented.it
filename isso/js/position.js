@@ -11,7 +11,7 @@ function position(page_element_id) {
     var isso = document.getElementById("isso-thread");
 
     this.column = function() {
-        page.style.margin-left = "5%";
+        page.style.marginLeft = "5%";
         isso.style.position = "fixed";
         isso.style.left = "calc(" + page.offsetWidth + "px + 5%)";
     };
