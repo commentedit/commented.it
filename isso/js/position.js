@@ -14,12 +14,12 @@ function position(page_element_id) {
         page.style.margin-left = "5%";
         isso.style.position = "fixed";
         isso.style.left = "calc(" + page.offsetWidth + "px + 5%)";
-    }
+    };
 
     this.basic = function() {
-        page.style.margin-left = "auto";
+        page.style.marginLeft = "auto";
         isso.style.position = "static";
-    }
+    };
 
 };
 
