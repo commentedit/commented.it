@@ -9,6 +9,7 @@ function position(page_element_id) {
 
     var page = document.getElementById(page_element_id);
     var isso = document.getElementById("isso-thread");
+    page.style.transition = "margin-left 1s";
 
     this.column = function() {
         page.style.marginLeft = "5%";
