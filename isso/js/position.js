@@ -19,7 +19,7 @@ function position(page_element_id, default_mode) {
     };
 
     this.basic = function() {
-        page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2;
+        page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2 + "px";
         isso.style.position = "static";
     };
 
