@@ -10,6 +10,11 @@
 #isso-thread {
     padding: 0;
     margin: 0;
+    /* the following is useful only when position is fixed
+    ** i.e. in column mode */
+    right: 5%;
+    top: 5%;
+    bottom: 0;
 }
 #isso-thread > h4 {
     color: #555;
