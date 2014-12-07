@@ -13,14 +13,16 @@ function position(page_element_id, default_mode) {
     var isso = document.getElementById("isso-thread");
 
     this.column = function() {
+        page.addEventListener("transitionend", function() {
+            isso.style.position = "fixed";
+        });
         page.style.marginLeft = "5%";
-        isso.style.position = "fixed";
         isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
     };
 
     this.basic = function() {
-        page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2 + "px";
         isso.style.position = "static";
+        page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2 + "px";
     };
 
     /* Switch to default mode before setting transition */
