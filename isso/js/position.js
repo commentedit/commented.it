@@ -18,6 +18,7 @@ function position(page_element_id) {
 
     this.basic = function() {
         page.style.marginLeft = "auto";
+        page.style.marginRight = "auto";
         isso.style.position = "static";
     };
 
