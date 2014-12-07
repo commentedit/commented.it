@@ -11,11 +11,17 @@ function position(page_element_id, default_mode) {
 
     var page = document.getElementById(page_element_id);
     var isso = document.getElementById("isso-thread");
+    var first_call = true;
 
     this.column = function() {
-        page.addEventListener("transitionend", function() {
+        if (first_call) {
             isso.style.position = "fixed";
-        });
+        }
+        else {
+            page.addEventListener("transitionend", function() {
+                isso.style.position = "fixed";
+            });
+        }
         page.style.marginLeft = "5%";
         isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
     };
@@ -25,13 +31,14 @@ function position(page_element_id, default_mode) {
         page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2 + "px";
     };
 
-    /* Switch to default mode before setting transition */
+    /* Switch to default mode before setting a transition */
     if (default_mode == "column") {
         this.column();
     }
     else {
         this.basic();
     }
+    first_call = false;
 
     page.style.transition = "margin-left 1s";
 };
