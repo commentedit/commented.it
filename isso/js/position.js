@@ -26,6 +26,7 @@ function position(page_element_id, default_mode) {
         }
         page.style.marginLeft = "5%";
         isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
+        isso.style.right = "5%";
     };
 
     this.basic = function() {
