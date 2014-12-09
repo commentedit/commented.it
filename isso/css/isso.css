@@ -10,10 +10,6 @@
 #isso-thread {
     padding: 0;
     margin: 0;
-    /* the following is useful only when position is fixed
-    ** i.e. in column mode */
-    top: 5%;
-    bottom: 0;
 }
 #isso-thread > h4 {
     color: #555;
@@ -233,6 +229,8 @@
 }
 
 #isso-root {
+    /* the following is useful only when position is fixed
+    ** i.e. in column mode */
     overflow: auto;
     height: calc(100% - 250px);
 }
