@@ -16,9 +16,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     var article = $("article");
     // but there can be many blocks in an article
     var blocks = $(".block", article, false);
-
-    var original_article = utils.clean_html(article.innerHTML);
-    var new_article = null;
+    // in the case there is no block, current_block will always represent the full article
+    var current_block = article;
 
     var original_content, new_content;
 
@@ -40,7 +39,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             show_original();
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
-                article.setAttribute("contenteditable", true);
+                original_content = utils.clean_html(current_block.innerHTML);
+                new_comment = null;
+                current_block.setAttribute("contenteditable", true);
                 // first time : create cancel button and associate event
                 if (!cancel_button) {
                     cancel_button = $(".post-action", comment_postbox).prepend(
@@ -64,12 +65,12 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     };
 
     var maybe_article_just_changed = function() {
-        var current = utils.clean_html(article.innerHTML);
-        if (current !== original_article) {
-            new_article = current;
+        var current = utils.clean_html(current_block.innerHTML);
+        if (current !== original_content) {
+            new_content = current;
         }
         else {
-            new_article = null;
+            new_content = null;
             if (comment_field.innerHTML === "") {
                 cancel();
             }
@@ -78,10 +79,10 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     var cancel = function() {
         if (mode === "commenting") {
-            article.setAttribute("contenteditable", false);
-            if (new_article !== null) {
-                article.innerHTML = original_article;
-                new_article = null;
+            current_block.setAttribute("contenteditable", false);
+            if (new_content !== null) {
+                current_block.innerHTML = original_content;
+                new_content = null;
             }
             cancel_button.hide();
             mode = "reading";
@@ -97,11 +98,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             var center = window.pageYOffset + window.innerHeight/2;
             var i = 0;
             while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
-            i--; // current block is block i
-            for (var j = 0; j < blocks.length; j++) {
-                blocks[j].style.background = "transparent";
+            current_block = blocks[i - 1];
+            for (var i = 0; i < blocks.length; i++) {
+                blocks[i].style.background = "transparent";
             }
-            blocks[i].style.background = "#D8D8D8";
+            current_block.style.background = "#D8D8D8";
         }
     };
 
@@ -116,7 +117,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     // print diffs
                     var array = JSON.parse(utils.tags_from_text(comment.edit));
                     var html = dmp.diff_prettyHtml(array);
-                    article.innerHTML = html;
+                    current_block.innerHTML = html;
 
                     // add button to go back to standard reading mode
                     original_button.style.visibility = "visible";
@@ -141,7 +142,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     var show_original = function() {
         if (mode === "reading_modification") {
             // restore original display
-            article.innerHTML = original_article;
+            current_block.innerHTML = original_content;
             original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
@@ -149,8 +150,6 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             }
             mode = "reading";
             currently_showing = null;
-            // recompute blocks
-            blocks = $(".block", article, false);
             // now show the current block like if we had just scrolled
             show_block_comments();
         }
@@ -181,12 +180,12 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     return {
         init: init,
         new_article: function() {
-            if (new_article === null) {
+            if (new_content === null) {
                 return null;
             }
             // otherwise we apply some pre-treatment before returning
-            var new_text = utils.tags_from_text(new_article);
-            var diffs = dmp.diff_main(original_article, new_text);
+            var new_text = utils.tags_from_text(new_content);
+            var diffs = dmp.diff_main(original_content, new_text);
             dmp.diff_cleanupSemantic(diffs);
             return JSON.stringify(diffs);
         },
