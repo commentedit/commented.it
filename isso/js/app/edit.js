@@ -101,7 +101,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             for (var j = 0; j < blocks.length; j++) {
                 blocks[j].style.background = "transparent";
             }
-            blocks[i].style.background = "light gray";
+            blocks[i].style.background = "#D8D8D8";
         }
     };
 
