@@ -149,12 +149,15 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // DEFINE EVENTS
 
     original_button.on("click", show_original);
+
     article.on("keyup", maybe_article_just_changed);
     document.addEventListener("keydown", function(e) {
         if (e.keyCode === 27) {
             show_original();
         }
     });
+
+    window.addEventListener("scroll", show_block_comments);
 
     // ADD HTML ELEMENTS
     original_button.style.visibility = "hidden";
