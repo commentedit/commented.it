@@ -12,10 +12,17 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // if mode is "reading_modification", currently_showing stores id of comment
     var currently_showing;
 
+    // there must be only one <article> on the page
     var article = $("article");
+    // but there can be many blocks in an article
+    var blocks = $(".block", article, false);
+
     var original_article = utils.clean_html(article.innerHTML);
     var new_article = null;
 
+    var original_content, new_content;
+
+    // button to show the original version
     var original_button = $.htmlify('<button type="button">' + i18n.translate("show-original") + '</button>');
 
     // make a diff_match_patch object once and for all
@@ -23,6 +30,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     // remember some of the DOM elements
     var cancel_button, comment_field;
+
+    // FUNCTION WHICH ENABLE COMMENTING AND EDITING
 
     var init = function(comment_postbox) {
         comment_field = $(".textarea", comment_postbox);
@@ -79,7 +88,18 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         }
     };
 
-    var show = function(el, comment) {
+    // FUNCTIONS TO SHOW COMMENTS / EDITS
+
+    var show_block_comments = function() {
+        // current block = block in the middle
+        var center = window.pageYOffset + window.innerHeight;
+        var i = 0;
+        while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
+        i--; // current block is block i
+        blocks[i].style.backgroundColor = "gray";
+    };
+
+    var show_edit = function(el, comment) {
         // let's curry!
         return function() {
             if (mode === "reading" || mode === "reading_modification") {
@@ -126,7 +146,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         }
     };
 
-    // define events
+    // DEFINE EVENTS
+
     original_button.on("click", show_original);
     article.on("keyup", maybe_article_just_changed);
     document.addEventListener("keydown", function(e) {
@@ -135,9 +156,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
         }
     });
 
-    // add html elements
+    // ADD HTML ELEMENTS
     original_button.style.visibility = "hidden";
     $("#isso-thread").prepend(original_button);
+
+    // PUBLIC METHODS
 
     return {
         init: init,
@@ -152,7 +175,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             return JSON.stringify(diffs);
         },
         cancel: cancel,
-        show: show
+        show: show_edit
     };
 });
 
