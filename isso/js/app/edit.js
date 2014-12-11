@@ -91,12 +91,18 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // FUNCTIONS TO SHOW COMMENTS / EDITS
 
     var show_block_comments = function() {
-        // current block = block in the middle
-        var center = window.pageYOffset + window.innerHeight/2;
-        var i = 0;
-        while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
-        i--; // current block is block i
-        blocks[i].style.backgroundColor = "gray";
+        // when showing an edit or commenting, the current block is locked
+        if (mode == "reading") {
+            // current block = block in the middle
+            var center = window.pageYOffset + window.innerHeight/2;
+            var i = 0;
+            while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
+            i--; // current block is block i
+            for (var j = 0; j < blocks.length; j++) {
+                blocks[j].style.backgroundColor = "white";
+            }
+            blocks[i].style.backgroundColor = "gray";
+        }
     };
 
     var show_edit = function(el, comment) {
