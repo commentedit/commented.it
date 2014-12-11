@@ -151,6 +151,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             currently_showing = null;
             // recompute blocks
             blocks = $(".block", article, false);
+            // now show the current block like if we had just scrolled
+            show_block_comments();
         }
     };
 
@@ -170,6 +172,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // ADD HTML ELEMENTS
     original_button.style.visibility = "hidden";
     $("#isso-thread").prepend(original_button);
+
+    // FIRST CALLS
+    show_block_comments();
 
     // PUBLIC METHODS
 
