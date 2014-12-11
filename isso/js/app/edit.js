@@ -92,7 +92,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     var show_block_comments = function() {
         // current block = block in the middle
-        var center = window.pageYOffset + window.innerHeight;
+        var center = window.pageYOffset + window.innerHeight/2;
         var i = 0;
         while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
         i--; // current block is block i
