@@ -99,9 +99,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
             i--; // current block is block i
             for (var j = 0; j < blocks.length; j++) {
-                blocks[j].style.backgroundColor = "white";
+                blocks[j].style.background = "transparent";
             }
-            blocks[i].style.backgroundColor = "gray";
+            blocks[i].style.background = "light gray";
         }
     };
 
