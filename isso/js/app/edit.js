@@ -149,6 +149,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             }
             mode = "reading";
             currently_showing = null;
+            // recompute blocks
+            blocks = $(".block", article, false);
         }
     };
 
