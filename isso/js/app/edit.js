@@ -47,7 +47,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     cancel_button = $(".post-action", comment_postbox).prepend(
                       '<input type="reset" value="' + i18n.translate("postbox-cancel") + '"></input>');
                     cancel_button.on("click", function(e) {
-                        if (confirm(i18n.translate("postbox-confirm-cancel"))) {
+                        if (new_content === null ||
+                            confirm(i18n.translate("postbox-confirm-cancel"))) {
                             comment_field.innerHTML = "";
                             cancel();
                         }
