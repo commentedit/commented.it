@@ -40,7 +40,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
                 original_content = utils.clean_html(current_block.innerHTML);
-                new_comment = null;
+                new_content = null;
                 current_block.setAttribute("contenteditable", true);
                 // first time : create cancel button and associate event
                 if (!cancel_button) {
