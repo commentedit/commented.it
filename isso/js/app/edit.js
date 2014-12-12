@@ -118,6 +118,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     show_original();
                 }
                 else {
+                    mode = "reading_modification";
+                    currently_showing = comment.id;
+
                     // print diffs
                     var array = JSON.parse(utils.tags_from_text(comment.edit));
                     var html = dmp.diff_prettyHtml(array);
@@ -135,9 +138,6 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
                     // scroll to first change
                     $("#edit").scrollIntoView();
-
-                    mode = "reading_modification";
-                    currently_showing = comment.id;
                 }
             }
         };
