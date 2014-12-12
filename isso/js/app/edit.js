@@ -74,6 +74,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             new_content = null;
             if (comment_field.innerHTML === i18n.translate("postbox-text") ||
                 comment_field.innerHTML === "") {
+                current_block.blur();
                 cancel();
             }
         }
