@@ -59,7 +59,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 }
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
-                                           && new_article === null) {
+                                           && new_content === null) {
                 cancel();
             }
         };
