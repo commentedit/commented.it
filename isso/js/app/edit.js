@@ -103,7 +103,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             for (var i = 0; i < blocks.length; i++) {
                 blocks[i].style.background = "transparent";
             }
-            current_block.style.background = "#D8D8D8";
+            current_block.style.background = "rgba(211,211,211,0.5)";
         }
     };
 
