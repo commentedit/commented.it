@@ -102,6 +102,11 @@ define(function() {
         this.style.display = "none";
     };
 
+    window.Element.prototype.topIsVisible = function() {
+         return this.offsetTop >= window.pageYOffset &&
+                this.offsetTop < window.pageYOffset + window.innerHeight;
+    };
+
     var DOM = function(query, root, single) {
         /*
         jQuery-like CSS selector which returns on :param query: either a
