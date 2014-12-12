@@ -94,7 +94,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     var show_block_comments = function() {
         // when showing an edit or commenting, the current block is locked
-        if (mode == "reading") {
+        // this function is useless if there are no blocks
+        if (mode == "reading" && blocks !== null) {
             // current block = block in the middle
             var center = window.pageYOffset + window.innerHeight/2;
             var i = 0;
