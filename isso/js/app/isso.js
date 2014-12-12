@@ -339,7 +339,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
         if (comment.edit !== null) {
             // change cursor to indicate that the comment is clickable
             el.style.cursor = "pointer";
-            el.on("click", edit.show(el, comment));
+            el.addEventListener("click", edit.show(el, comment));
         }
 
     };
