@@ -27,6 +27,10 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // make a diff_match_patch object once and for all
     var dmp = new diff_match_patch();
 
+    //CKEDITOR.basePath = "/js/lib/ckeditor/"
+    // turn off automatic editor creation once and for all
+    CKEDITOR.disableAutoInline = true;
+
     // remember some of the DOM elements
     var cancel_button, comment_field;
 
@@ -42,6 +46,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 original_content = utils.clean_html(current_block.innerHTML);
                 new_content = null;
                 current_block.setAttribute("contenteditable", true);
+                CKEDITOR.inline(current_block);
                 // first time : create cancel button and associate event
                 if (!cancel_button) {
                     cancel_button = $(".post-action", comment_postbox).prepend(
