@@ -23,6 +23,19 @@ There is a [wiki page](https://github.com/unkilodeplumes/commented.it/wiki/How-t
 commented.it on OpenShift.
 If you just want it running somewhere without getting a headache, this might be just what you need.
 
+###Using CKEditor with commented.it
+
+[CKEditor](http://ckeditor.com/) provides a WYSIWYG web text editor which integrates nicely with commented.it.
+It will give your users more comfort when editing your main text.
+If you wish to use CKEditor just add the script from [their CDN](http://ckeditor.com/download#cdn-row)
+in your webpage, just before loading the script for commented.it. Example:
+```
+<script src="//cdn.ckeditor.com/4.4.6/standard/ckeditor.js"></script>
+<script data-isso="//comments.example.tld/"
+        src="//comments.example.tld/js/embed.min.js"></script>
+<section id="isso-thread"></section>
+```
+
 License
 -------
 
