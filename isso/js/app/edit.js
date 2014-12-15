@@ -24,12 +24,17 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     // button to show the original version
     var original_button = $.htmlify('<button type="button">' + i18n.translate("show-original") + '</button>');
 
+    // INITIALIZE LIBRARIES
+
     // make a diff_match_patch object once and for all
     var dmp = new diff_match_patch();
 
-    //CKEDITOR.basePath = "/js/lib/ckeditor/"
-    // turn off automatic editor creation once and for all
-    CKEDITOR.disableAutoInline = true;
+    // CKEDITOR is not required thus we must check if it is available
+    if (typeof CKEDITOR !== "undefined") {
+        // turn off automatic editor creation once and for all
+        CKEDITOR.disableAutoInline = true;
+    }
+    var editor;
 
     // remember some of the DOM elements
     var cancel_button, comment_field;
@@ -46,7 +51,10 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 original_content = utils.clean_html(current_block.innerHTML);
                 new_content = null;
                 current_block.setAttribute("contenteditable", true);
-                CKEDITOR.inline(current_block);
+                if (typeof CKEDITOR !== "undefined") {
+                    editor = CKEDITOR.inline(current_block);
+                    editor.on("change", maybe_article_just_changed);
+                }
                 // first time : create cancel button and associate event
                 if (!cancel_button) {
                     cancel_button = $(".post-action", comment_postbox).prepend(
@@ -173,7 +181,11 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     original_button.on("click", show_original);
 
-    article.on("keyup", maybe_article_just_changed);
+    // fallback if we cannot use CKEditor change event
+    if (typeof CKEDITOR === "undefined") {
+        article.on("keyup", maybe_article_just_changed);
+    }
+
     document.addEventListener("keydown", function(e) {
         if (e.keyCode === 27) {
             show_original();
