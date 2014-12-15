@@ -62,7 +62,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                             breakAfterClose: false
                         });
                         // original content after CKEditor reformatting
-                        original_content = editor.getData();
+                        original_content = he.decode(editor.getData());
                     });
                     editor.on("change", maybe_article_just_changed);
                 }
@@ -92,7 +92,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var maybe_article_just_changed = function() {
         var current = typeof CKEDITOR === "undefined" ?
                         utils.clean_html(current_block.innerHTML) :
-                        editor.getData();
+                        he.decode(editor.getData());
         if (current !== original_content) {
             new_content = current;
         }
