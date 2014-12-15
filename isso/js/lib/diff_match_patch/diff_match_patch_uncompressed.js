@@ -5,6 +5,7 @@
  * http://code.google.com/p/google-diff-match-patch/
  *
  * Modified by Théo Zimmermann (2014).
+ * The original version may be found at the address above.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -213,18 +214,19 @@ diff_match_patch.prototype.diff_compute_ = function(text1, text2, checklines,
   return this.diff_bisect_(text1, text2, deadline);
 };
 
-
 /**
- * Do a quick line-level diff on both strings, then rediff the parts for
- * greater accuracy.
- * This speedup can produce non-minimal diffs.
+ * Compare the two texts line by line or words by words,
+ * depending on the delimiter.
+ * This is used as an auxiliary function inside the main algorithm
+ * but can also be used directly if we do not want a character-by-character
+ * comparison.
  * @param {string} text1 Old string to be diffed.
  * @param {string} text2 New string to be diffed.
  * @param {number} deadline Time when the diff should be complete by.
  * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
- * @private
+ * @public
  */
-diff_match_patch.prototype.diff_lineMode_ = function(text1, text2, deadline) {
+diff_match_patch.prototype.diff_lineMode = function(text1, text2, deadline) {
   // Scan the text on a line-by-line basis first.
   var a = this.diff_linesToChars_(text1, text2);
   text1 = a.chars1;
@@ -238,6 +240,21 @@ diff_match_patch.prototype.diff_lineMode_ = function(text1, text2, deadline) {
   // Eliminate freak matches (e.g. blank lines)
   this.diff_cleanupSemantic(diffs);
 
+  return diffs;
+};
+
+/**
+ * Do a quick line-level diff on both strings, then rediff the parts for
+ * greater accuracy.
+ * This speedup can produce non-minimal diffs.
+ * @param {string} text1 Old string to be diffed.
+ * @param {string} text2 New string to be diffed.
+ * @param {number} deadline Time when the diff should be complete by.
+ * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
+ * @private
+ */
+diff_match_patch.prototype.diff_lineMode_ = function(text1, text2, deadline) {
+  var diffs = this.diff_lineMode(text1, text2, deadline);
   // Rediff any replacement blocks, this time character-by-character.
   // Add a dummy entry at the end.
   diffs.push([DIFF_EQUAL, '']);
