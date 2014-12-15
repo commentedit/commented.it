@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18n, utils) {
+define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function($, i18n, utils, he) {
 
     "use strict";
 
@@ -153,7 +153,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                     // save for later
                     original_content = utils.clean_html(current_block.innerHTML);
                     // print diffs
-                    var array = JSON.parse(utils.tags_from_text(comment.edit));
+                    var array = JSON.parse(he.decode(comment.edit));
                     var html = dmp.diff_prettyHtml(array);
                     current_block.innerHTML = html;
 
@@ -180,7 +180,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     var show_original = function() {
         if (mode === "reading_modification") {
             // restore original display
-            current_block.innerHTML = original_content;
+            current_block.innerHTML = he.decode(original_content);
             original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
@@ -226,7 +226,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 return null;
             }
             // otherwise we apply some pre-treatment before returning
-            var new_text = utils.tags_from_text(new_content);
+            var new_text = he.decode(new_content);
             var diffs = dmp.diff_lineMode(original_content, new_text, " \n");
             return JSON.stringify(diffs);
         },
