@@ -53,6 +53,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                 current_block.setAttribute("contenteditable", true);
                 if (typeof CKEDITOR !== "undefined") {
                     editor = CKEDITOR.inline(current_block);
+                    // CKEditor does some reformatting that shouldn't count as change
+                    original_content = utils.clean_html(current_block.innerHTML);
                     editor.on("change", maybe_article_just_changed);
                 }
                 // first time : create cancel button and associate event
