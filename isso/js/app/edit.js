@@ -95,7 +95,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
 
     var cancel = function() {
         if (mode === "commenting") {
-            editor.destroy();
+            if (typeof editor !== "undefined") {
+                editor.destroy();
+            }
             current_block.setAttribute("contenteditable", false);
             if (new_content !== null) {
                 current_block.innerHTML = original_content;
