@@ -61,6 +61,8 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
                             breakBeforeClose: false,
                             breakAfterClose: false
                         });
+                        // original content after CKEditor reformatting
+                        original_content = editor.getData();
                     });
                     editor.on("change", maybe_article_just_changed);
                 }
@@ -88,7 +90,9 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
     };
 
     var maybe_article_just_changed = function() {
-        var current = utils.clean_html(current_block.innerHTML);
+        var current = typeof CKEDITOR === "undefined" ?
+                        utils.clean_html(current_block.innerHTML) :
+                        editor.getData();
         if (current !== original_content) {
             new_content = current;
         }
