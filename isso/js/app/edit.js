@@ -214,7 +214,7 @@ define(["app/dom", "app/i18n", "app/utils", "diff_match_patch"], function($, i18
             }
             // otherwise we apply some pre-treatment before returning
             var new_text = utils.tags_from_text(new_content);
-            var diffs = dmp.diff_lineMode(original_content, new_text);
+            var diffs = dmp.diff_lineMode(original_content, new_text, " \n");
             return JSON.stringify(diffs);
         },
         cancel: cancel,
