@@ -1294,6 +1294,15 @@ diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
     }
     return output.join('');
   };
+  var insert_edit_id_if_necessary = function() {
+    if (is_first_change) {
+      is_first_change = 0;
+      return '<span id="edit"></span>';
+    }
+    else {
+      return "";
+    }
+  };
   var html = [];
   for (var x = 0; x < diffs.length; x++) {
     var op = diffs[x][0];    // Operation (insert, delete, equal)
@@ -1301,11 +1310,15 @@ diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
     switch (op) {
       case DIFF_INSERT:
         // inserted html tags are simply used in the report
-        html[x] = tag.test(text) ? text : mark('<ins style="background:#e6ffe6;">', text, '</ins>');
+        html[x] = tag.test(text) ?
+                    insert_edit_id_if_necessary() + text :
+                    mark('<ins style="background:#e6ffe6;">', text, '</ins>');
         break;
       case DIFF_DELETE:
         // deleted html tags are simply removed from report
-        html[x] = tag.test(text) ? "" : mark('<del style="background:#ffe6e6;">', text, '</del>');
+        html[x] = tag.test(text) ?
+                    insert_edit_id_if_necessary() :
+                    mark('<del style="background:#ffe6e6;">', text, '</del>');
         break;
       case DIFF_EQUAL:
         html[x] = text;
