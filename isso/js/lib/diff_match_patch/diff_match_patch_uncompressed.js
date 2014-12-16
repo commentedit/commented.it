@@ -1270,11 +1270,11 @@ diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
  */
 diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
   // adapt because diffs can include html tags
+  var tag = /(<\/?[a-zA-Z]*>)/;
   // also: add #id to first change
   var is_first_change = 1;
   var mark = function(open, text, close) {
     var output = [];
-    var tag = /(<\/?[a-zA-Z]*>)/;
     var text_and_tags = text.split(tag);
     for (var i = 0; i < text_and_tags.length; i++) {
       var current_text = text_and_tags[i];
@@ -1300,10 +1300,12 @@ diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
     var text = diffs[x][1];  // Text of change.
     switch (op) {
       case DIFF_INSERT:
-        html[x] = mark('<ins style="background:#e6ffe6;">', text, '</ins>');
+        // inserted html tags are simply used in the report
+        html[x] = tag.test(text) ? text : mark('<ins style="background:#e6ffe6;">', text, '</ins>');
         break;
       case DIFF_DELETE:
-        html[x] = mark('<del style="background:#ffe6e6;">', text, '</del>');
+        // deleted html tags are simply removed from report
+        html[x] = tag.test(text) ? "" : mark('<del style="background:#ffe6e6;">', text, '</del>');
         break;
       case DIFF_EQUAL:
         html[x] = text;
