@@ -35,6 +35,12 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         CKEDITOR.disableAutoInline = true;
     }
     var editor;
+    // content after CKEditor reformatting
+    // after decoding html entities
+    // and after removing extra whitespace and new lines
+    var getEditorContent = function() {
+        return utils.clean_html(he.decode(editor.getData()));
+    };
 
     // remember some of the DOM elements
     var cancel_button, comment_field;
@@ -61,8 +67,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                             breakBeforeClose: false,
                             breakAfterClose: false
                         });
-                        // original content after CKEditor reformatting
-                        original_content = he.decode(editor.getData());
+                        original_content = getEditorContent();
                     });
                     editor.on("change", maybe_article_just_changed);
                 }
@@ -92,7 +97,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var maybe_article_just_changed = function() {
         var current = typeof CKEDITOR === "undefined" ?
                         utils.clean_html(current_block.innerHTML) :
-                        he.decode(editor.getData());
+                        getEditorContent();
         if (current !== original_content) {
             new_content = current;
         }
