@@ -214,7 +214,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var show_original = function() {
         if (mode === "reading_modification") {
             // restore original display
-            current_block.innerHTML = he.decode(original_content);
+            current_block.innerHTML = original_content;
             original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
