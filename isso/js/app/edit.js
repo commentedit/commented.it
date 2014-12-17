@@ -213,8 +213,11 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     }
                     el.style.background = "#e6ffe6";
 
-                    // scroll to first change
-                    var edit_top = $("#edit")
+                    // scroll to block then to first change
+                    var edit_top = $("#edit");
+                    if (!edit_top.topIsVisible()) {
+                        current_block.scrollIntoView();
+                    }
                     if (!edit_top.topIsVisible()) {
                         edit_top.scrollIntoView();
                     }
