@@ -126,6 +126,15 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         }
     };
 
+    // AUXILIARY
+
+    var highlight_current_block = function() {
+        for (var i = 0; i < blocks.length; i++) {
+            blocks[i].style.background = "transparent";
+        }
+        current_block.style.background = "rgba(211,211,211,0.5)";
+    };
+
     // FUNCTIONS TO SHOW COMMENTS / EDITS
 
     var show_block_comments = function() {
@@ -137,10 +146,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             var i = 0;
             while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
             current_block = blocks[i - 1];
-            for (var i = 0; i < blocks.length; i++) {
-                blocks[i].style.background = "transparent";
-            }
-            current_block.style.background = "rgba(211,211,211,0.5)";
+            highlight_current_block();
         }
     };
 
@@ -156,6 +162,24 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     show_original();
                 }
                 else {
+                    // first check that the block associated with the comment
+                    // exists or that there is no associated block simply
+                    // because the page has no blocks
+                    if (comment.block === "") {
+                        if (blocks !== null) { return; }
+                    }
+                    else {
+                        if (blocks === null) { return; }
+                        var i = 0;
+                        while (
+                            i < blocks.length &&
+                            blocks[i].id !== comment.block
+                        ) { i++; }
+                        if (i === blocks.length) { return; }
+                        current_block = blocks[i];
+                        highlight_current_block();
+                    }
+
                     mode = "reading_modification";
                     currently_showing = comment.id;
 
