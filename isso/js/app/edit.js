@@ -7,6 +7,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     "use strict";
 
+    // ATTRIBUTES
+
     // mode can take values "reading", "reading_modification" and "commenting"
     var mode = "reading";
     // if mode is "reading_modification", currently_showing stores id of comment
@@ -24,6 +26,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     // button to show the original version
     var original_button = $.htmlify('<button type="button">' + i18n.translate("show-original") + '</button>');
 
+    // remember some of the DOM elements
+    var cancel_button, comment_field;
+
     // INITIALIZE LIBRARIES
 
     // make a diff_match_patch object once and for all
@@ -35,6 +40,16 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         CKEDITOR.disableAutoInline = true;
     }
     var editor;
+
+    // AUXILIARY FUNCTIONS
+
+    var highlight_current_block = function() {
+        for (var i = 0; i < blocks.length; i++) {
+            blocks[i].style.background = "transparent";
+        }
+        current_block.style.background = "rgba(211,211,211,0.5)";
+    };
+
     // content after CKEditor reformatting
     // after decoding html entities
     // and after removing extra whitespace and new lines
@@ -42,10 +57,11 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         return utils.clean_html(he.decode(editor.getData()));
     };
 
-    // remember some of the DOM elements
-    var cancel_button, comment_field;
+    var getBlockContent = function() {
+        return utils.clean_html(current_block.innerHTML);
+    }
 
-    // FUNCTION WHICH ENABLE COMMENTING AND EDITING
+    // FUNCTIONS WHICH ENABLE COMMENTING AND EDITING
 
     var init = function(comment_postbox) {
         comment_field = $(".textarea", comment_postbox);
@@ -54,7 +70,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             show_original();
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
-                original_content = utils.clean_html(current_block.innerHTML);
+                original_content = getBlockContent();
                 new_content = null;
                 current_block.setAttribute("contenteditable", true);
                 if (typeof CKEDITOR !== "undefined") {
@@ -96,7 +112,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     var maybe_article_just_changed = function() {
         var current = typeof CKEDITOR === "undefined" ?
-                        utils.clean_html(current_block.innerHTML) :
+                        getBlockContent() :
                         getEditorContent();
         if (current !== original_content) {
             new_content = current;
@@ -124,15 +140,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             cancel_button.hide();
             mode = "reading";
         }
-    };
-
-    // AUXILIARY
-
-    var highlight_current_block = function() {
-        for (var i = 0; i < blocks.length; i++) {
-            blocks[i].style.background = "transparent";
-        }
-        current_block.style.background = "rgba(211,211,211,0.5)";
     };
 
     // FUNCTIONS TO SHOW COMMENTS / EDITS
@@ -180,12 +187,12 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
                     // save original content for later if it was not already
                     if (mode === "reading") {
-                        original_content = utils.clean_html(current_block.innerHTML);
+                        original_content = getBlockContent();
                     }
                     else if (previous_block !== current_block) {
                         // restore original content for previous block
                         previous_block.innerHTML = original_content;
-                        original_content = utils.clean_html(current_block.innerHTML);
+                        original_content = getBlockContent();
                     }
 
                     mode = "reading_modification";
