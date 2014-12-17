@@ -179,7 +179,12 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     }
 
                     // save original content for later if it was not already
-                    if (mode === "reading" || previous_block !== current_block) {
+                    if (mode === "reading") {
+                        original_content = utils.clean_html(current_block.innerHTML);
+                    }
+                    else if (previous_block !== current_block) {
+                        // restore original content for previous block
+                        previous_block.innerHTML = original_content;
                         original_content = utils.clean_html(current_block.innerHTML);
                     }
 
