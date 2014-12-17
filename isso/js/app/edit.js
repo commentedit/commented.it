@@ -147,6 +147,10 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var show_edit = function(el, comment) {
         // let's curry!
         return function() {
+            if (mode === "reading") {
+                // save for later
+                original_content = utils.clean_html(current_block.innerHTML);
+            }
             if (mode === "reading" || mode === "reading_modification") {
                 if (currently_showing === comment.id) {
                     show_original();
@@ -155,8 +159,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     mode = "reading_modification";
                     currently_showing = comment.id;
 
-                    // save for later
-                    original_content = utils.clean_html(current_block.innerHTML);
                     // print diffs
                     var array = JSON.parse(he.decode(comment.edit));
                     var html = dmp.diff_prettyHtml(array);
