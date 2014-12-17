@@ -100,6 +100,8 @@ class Disqus(object):
 
             item = {
                 'dsq:id': post.attrib.get(Disqus.internals + 'id'),
+                'block': '',
+                'edit': None,
                 'text': post.find(Disqus.ns + 'message').text,
                 'author': post.find('{0}author/{0}name'.format(Disqus.ns)).text,
                 'email': post.find('{0}author/{0}email'.format(Disqus.ns)).text,
@@ -222,6 +224,8 @@ class WordPress(object):
 
     def Comment(self, el):
         return {
+            "block": "",
+            "edit": None,
             "text": strip(el.find(self.ns + "comment_content").text),
             "author": strip(el.find(self.ns + "comment_author").text),
             "email": strip(el.find(self.ns + "comment_author_email").text),
