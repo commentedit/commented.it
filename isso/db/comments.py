@@ -29,7 +29,8 @@ class Comments:
     """
 
     fields = ['tid', 'id', 'parent', 'created', 'modified', 'mode', 'remote_addr',
-              'text', 'edit', 'author', 'email', 'website', 'likes', 'dislikes', 'voters']
+              'block', 'edit',
+              'text', 'author', 'email', 'website', 'likes', 'dislikes', 'voters']
 
     def __init__(self, db):
 
@@ -38,7 +39,8 @@ class Comments:
             'CREATE TABLE IF NOT EXISTS comments (',
             '    tid REFERENCES threads(id), id INTEGER PRIMARY KEY, parent INTEGER,',
             '    created FLOAT NOT NULL, modified FLOAT, mode INTEGER, remote_addr VARCHAR,',
-            '    text VARCHAR, edit VARCHAR, author VARCHAR, email VARCHAR, website VARCHAR,',
+            '    block VARCHAR, edit VARCHAR,',
+            '    text VARCHAR, author VARCHAR, email VARCHAR, website VARCHAR,',
             '    likes INTEGER DEFAULT 0, dislikes INTEGER DEFAULT 0, voters BLOB NOT NULL);'])
 
     def add(self, uri, c):
@@ -56,15 +58,18 @@ class Comments:
             'INSERT INTO comments (',
             '    tid, parent,'
             '    created, modified, mode, remote_addr,',
-            '    text, edit, author, email, website, voters )',
+            '    block, edit,',
+            '    text, author, email, website, voters )',
             'SELECT',
             '    threads.id, ?,',
             '    ?, ?, ?, ?,',
-            '    ?, ?, ?, ?, ?, ?',
+            '    ?, ?,',
+            '    ?, ?, ?, ?, ?',
             'FROM threads WHERE threads.uri = ?;'], (
             c.get('parent'),
             c.get('created') or time.time(), None, c["mode"], c['remote_addr'],
-            c['text'], c.get('edit'), c.get('author'), c.get('email'), c.get('website'), buffer(
+            c.get('block'), c.get('edit'), 
+            c['text'], c.get('author'), c.get('email'), c.get('website'), buffer(
                 Bloomfilter(iterable=[c['remote_addr']]).array),
             uri)
         )

@@ -228,7 +228,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     return {
         init: init,
-        new_article: function() {
+        new_content: function() {
             if (new_content === null) {
                 return null;
             }
@@ -237,6 +237,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             var diffs = dmp.diff_lineMode(original_content, new_text, " \n");
             return JSON.stringify(diffs);
         },
+        block_id: function() { return current_block.id; },
         cancel: cancel,
         show: show_edit
     };

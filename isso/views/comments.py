@@ -75,11 +75,11 @@ def xhr(func):
 
 class API(object):
 
-    FIELDS = set(['id', 'parent', 'text', 'edit', 'author', 'website',
+    FIELDS = set(['id', 'parent', 'block', 'edit', 'text', 'author', 'website',
                   'mode', 'created', 'modified', 'likes', 'dislikes', 'hash'])
 
     # comment fields, that can be submitted
-    ACCEPT = set(['text', 'edit', 'author', 'website', 'email', 'parent'])
+    ACCEPT = set(['block','edit', 'text', 'author', 'website', 'email', 'parent'])
 
     VIEWS = [
         ('fetch',   ('GET', '/')),
