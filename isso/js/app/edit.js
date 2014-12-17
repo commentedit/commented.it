@@ -153,15 +153,13 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var show_edit = function(el, comment) {
         // let's curry!
         return function() {
-            if (mode === "reading") {
-                // save for later
-                original_content = utils.clean_html(current_block.innerHTML);
-            }
             if (mode === "reading" || mode === "reading_modification") {
                 if (currently_showing === comment.id) {
                     show_original();
                 }
                 else {
+                    var previous_block = current_block;
+
                     // first check that the block associated with the comment
                     // exists or that there is no associated block simply
                     // because the page has no blocks
@@ -178,6 +176,11 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                         if (i === blocks.length) { return; }
                         current_block = blocks[i];
                         highlight_current_block();
+                    }
+
+                    // save original content for later if it was not already
+                    if (mode === "reading" || previous_block !== current_block) {
+                        original_content = utils.clean_html(current_block.innerHTML);
                     }
 
                     mode = "reading_modification";
