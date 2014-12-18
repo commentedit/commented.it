@@ -76,7 +76,7 @@ def xhr(func):
 class API(object):
 
     FIELDS = set(['id', 'parent', 'block', 'edit', 'text', 'author', 'website',
-                  'mode', 'created', 'modified', 'likes', 'dislikes', 'hash'])
+                  'mode', 'created', 'modified', 'likes', 'hash'])
 
     # comment fields, that can be submitted
     ACCEPT = set(['block','edit', 'text', 'author', 'website', 'email', 'parent'])
@@ -92,7 +92,6 @@ class API(object):
         ('moderate',('GET',  '/id/<int:id>/<any(activate,delete):action>/<string:key>')),
         ('moderate',('POST', '/id/<int:id>/<any(activate,delete):action>/<string:key>')),
         ('like',    ('POST', '/id/<int:id>/like')),
-        ('dislike', ('POST', '/id/<int:id>/dislike')),
         ('demo',    ('GET', '/demo'))
     ]
 
@@ -451,13 +450,7 @@ class API(object):
     @xhr
     def like(self, environ, request, id):
 
-        nv = self.comments.vote(True, id, utils.anonymize(str(request.remote_addr)))
-        return JSON(nv, 200)
-
-    @xhr
-    def dislike(self, environ, request, id):
-
-        nv = self.comments.vote(False, id, utils.anonymize(str(request.remote_addr)))
+        nv = self.comments.vote(id, utils.anonymize(str(request.remote_addr)))
         return JSON(nv, 200)
 
     # TODO: remove someday (replaced by :func:`counts`)

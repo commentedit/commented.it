@@ -30,7 +30,7 @@ class Comments:
 
     fields = ['tid', 'id', 'parent', 'created', 'modified', 'mode', 'remote_addr',
               'block', 'edit',
-              'text', 'author', 'email', 'website', 'likes', 'dislikes', 'voters']
+              'text', 'author', 'email', 'website', 'likes', 'voters']
 
     def __init__(self, db):
 
@@ -41,7 +41,7 @@ class Comments:
             '    created FLOAT NOT NULL, modified FLOAT, mode INTEGER, remote_addr VARCHAR,',
             '    block VARCHAR, edit VARCHAR,',
             '    text VARCHAR, author VARCHAR, email VARCHAR, website VARCHAR,',
-            '    likes INTEGER DEFAULT 0, dislikes INTEGER DEFAULT 0, voters BLOB NOT NULL);'])
+            '    likes INTEGER DEFAULT 0, voters BLOB NOT NULL);'])
 
     def add(self, uri, c):
         """
@@ -129,7 +129,7 @@ class Comments:
                 sql_args.append(parent)
 
         # custom sanitization
-        if order_by not in ['id', 'created', 'modified', 'likes', 'dislikes']:
+        if order_by not in ['id', 'created', 'modified', 'likes']:
             order_by = 'id'
         sql.append('ORDER BY ')
         sql.append(order_by)
@@ -184,36 +184,34 @@ class Comments:
         self._remove_stale()
         return self.get(id)
 
-    def vote(self, upvote, id, remote_addr):
+    def vote(self, id, remote_addr):
         """+1 a given comment. Returns the new like count (may not change because
         the creater can't vote on his/her own comment and multiple votes from the
         same ip address are ignored as well)."""
 
         rv = self.db.execute(
-            'SELECT likes, dislikes, voters FROM comments WHERE id=?', (id, )) \
+            'SELECT likes, voters FROM comments WHERE id=?', (id, )) \
             .fetchone()
 
         if rv is None:
             return None
 
-        likes, dislikes, voters = rv
-        if likes + dislikes >= 142:
-            return {'likes': likes, 'dislikes': dislikes}
+        likes, voters = rv
+        if likes >= 142:
+            return {'likes': likes}
 
-        bf = Bloomfilter(bytearray(voters), likes + dislikes)
+        bf = Bloomfilter(bytearray(voters), likes)
         if remote_addr in bf:
-            return {'likes': likes, 'dislikes': dislikes}
+            return {'likes': likes}
 
         bf.add(remote_addr)
         self.db.execute([
             'UPDATE comments SET',
-            '    likes = likes + 1,' if upvote else 'dislikes = dislikes + 1,',
+            '    likes = likes + 1,',
             '    voters = ?'
             'WHERE id=?;'], (buffer(bf.array), id))
 
-        if upvote:
-            return {'likes': likes + 1, 'dislikes': dislikes}
-        return {'likes': likes, 'dislikes': dislikes + 1}
+        return {'likes': likes + 1}
 
     def reply_count(self, url, mode=5, after=0):
         """

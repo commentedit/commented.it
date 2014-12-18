@@ -196,13 +196,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
             $("a.upvote", footer).on("click", function () {
                 api.like(comment.id).then(function (rv) {
-                    votes(rv.likes - rv.dislikes);
-                });
-            });
-
-            $("a.downvote", footer).on("click", function () {
-                api.dislike(comment.id).then(function (rv) {
-                    votes(rv.likes - rv.dislikes);
+                    votes(rv.likes);
                 });
             });
         }

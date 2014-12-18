@@ -176,13 +176,6 @@ define(["app/lib/promise", "app/globals"], function(Q, globals) {
         return deferred.promise;
     };
 
-    var dislike = function(id) {
-        var deferred = Q.defer();
-        curl("POST", endpoint + "/id/" + id + "/dislike", null,
-            function(rv) { deferred.resolve(JSON.parse(rv.body)); });
-        return deferred.promise;
-    };
-
     return {
         endpoint: endpoint,
         salt: salt,
@@ -193,7 +186,6 @@ define(["app/lib/promise", "app/globals"], function(Q, globals) {
         view: view,
         fetch: fetch,
         count: count,
-        like: like,
-        dislike: dislike
+        like: like
     };
 });

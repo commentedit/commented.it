@@ -43,7 +43,6 @@ class TestVote(unittest.TestCase):
 
         rv = self.makeClient("127.0.0.1").post("/new?uri=test", data=json.dumps({"text": "..."}))
         self.assertEqual(loads(rv.data)['likes'], 0)
-        self.assertEqual(loads(rv.data)['dislikes'], 0)
 
     def testSingleLike(self):
 
@@ -87,10 +86,3 @@ class TestVote(unittest.TestCase):
             else:
                 self.assertEqual(loads(rv.data)["likes"], num + 1)
 
-    def testDislike(self):
-        self.makeClient("127.0.0.1").post("/new?uri=test", data=json.dumps({"text": "..."}))
-        rv = self.makeClient("1.2.3.4").post('/id/1/dislike')
-
-        self.assertEqual(rv.status_code, 200)
-        self.assertEqual(loads(rv.data)['likes'], 0)
-        self.assertEqual(loads(rv.data)['dislikes'], 1)

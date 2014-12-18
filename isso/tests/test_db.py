@@ -92,7 +92,6 @@ class TestDBMigration(unittest.TestCase):
                         "    mode INTEGER,"
                         "    remote_addr VARCHAR,"
                         "    likes INTEGER DEFAULT 0,"
-                        "    dislikes INTEGER DEFAULT 0,"
                         "    voters BLOB)")
 
             con.execute("INSERT INTO threads (uri, title) VALUES (?, ?)", ("/", "Test"))

@@ -366,14 +366,14 @@ class TestComments(unittest.TestCase):
         self.post('/new?uri=%2F', data=json.dumps({"text": "..."}))
 
         # no header is fine (default for XHR)
-        self.assertEqual(self.post('/id/1/dislike', content_type="").status_code, 200)
+        self.assertEqual(self.post('/id/1/like', content_type="").status_code, 200)
 
         # x-www-form-urlencoded is definitely not RESTful
-        self.assertEqual(self.post('/id/1/dislike', content_type=form).status_code, 403)
+        self.assertEqual(self.post('/id/1/like', content_type=form).status_code, 403)
         self.assertEqual(self.post('/new?uri=%2F', data=json.dumps({"text": "..."}),
                                          content_type=form).status_code, 403)
         # just for the record
-        self.assertEqual(self.post('/id/1/dislike', content_type=js).status_code, 200)
+        self.assertEqual(self.post('/id/1/like', content_type=js).status_code, 200)
 
 
 class TestModeratedComments(unittest.TestCase):
