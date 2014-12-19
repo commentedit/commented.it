@@ -76,17 +76,12 @@ define(["app/i18n"], function(i18n) {
         return html.replace(/\n/g, "").replace(/\t/g, "");
     };
 
-    var tags_from_text = function(text) {
-        return text.replace(/&lt;/g, "<").replace(/&gt;/g, ">");
-    };
-
     return {
         cookie: cookie,
         pad: pad,
         ago: ago,
         text: text,
         detext: detext,
-        clean_html: clean_html,
-        tags_from_text: tags_from_text
+        clean_html: clean_html
     };
 });
