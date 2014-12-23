@@ -27,20 +27,6 @@
  */
 
 /**
- * Find the index which the first of several delimiters occurs at.
- * @param {string} delimiters A string containing one or several character
-                              delimiters.
- * @param {int} start The first index to look at.
- * @return {int} The first index of a delimiter >= start.
-*/
-String.prototype.firstIndexOf = function(delimiters, start) {
-  for (var i = (start || 0), j = this.length; i < j; i++) {
-    if (delimiters.indexOf(this[i]) >= 0) { return i; }
-  }
-  return -1;
-};
-
-/**
  * Class containing the diff, match and patch methods.
  * @constructor
  */
@@ -236,18 +222,13 @@ diff_match_patch.prototype.diff_compute_ = function(text1, text2, checklines,
  * comparison.
  * @param {string} text1 Old string to be diffed.
  * @param {string} text2 New string to be diffed.
- * @param {string} delimiters "\n" for line mode; " \n" for word mode
  * @param {number} deadline Time when the diff should be complete by.
  * @return {!Array.<!diff_match_patch.Diff>} Array of diff tuples.
  * @public
  */
-diff_match_patch.prototype.diff_lineMode = function(text1, text2, delimiters, deadline) {
-  // Default mode is "line mode" thus default delimiters is "\n"
-  if (typeof delimiters === "undefined") {
-    delimiters = "\n";
-  }
+diff_match_patch.prototype.diff_lineMode = function(text1, text2, deadline) {
   // Scan the text on a line-by-line basis first.
-  var a = this.diff_linesToChars_(text1, text2, delimiters);
+  var a = this.diff_linesToChars_(text1, text2);
   text1 = a.chars1;
   text2 = a.chars2;
   var linearray = a.lineArray;
@@ -469,18 +450,16 @@ diff_match_patch.prototype.diff_bisectSplit_ = function(text1, text2, x, y,
 
 /**
  * Split two texts into an array of strings.  Reduce the texts to a string of
- * hashes where each Unicode character represents one line or one word
- * depending on the delimiter.
+ * hashes where each Unicode character represents one line.
  * @param {string} text1 First string.
  * @param {string} text2 Second string.
- * @param {string} delimiters Use "\n" for lines and " \n" for words
  * @return {{chars1: string, chars2: string, lineArray: !Array.<string>}}
  *     An object containing the encoded text1, the encoded text2 and
  *     the array of unique strings.
  *     The zeroth element of the array of unique strings is intentionally blank.
  * @private
  */
-diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2, delimiters) {
+diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2) {
   var lineArray = [];  // e.g. lineArray[4] == 'Hello\n'
   var lineHash = {};   // e.g. lineHash['Hello\n'] == 4
 
@@ -505,9 +484,8 @@ diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2, delimiter
     var lineEnd = -1;
     // Keeping our own length variable is faster than looking it up.
     var lineArrayLength = lineArray.length;
-
     while (lineEnd < text.length - 1) {
-      lineEnd = text.firstIndexOf(delimiters, lineStart);
+      lineEnd = text.indexOf('\n', lineStart);
       if (lineEnd == -1) {
         lineEnd = text.length - 1;
       }
