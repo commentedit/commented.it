@@ -247,4 +247,7 @@
     background: rgba(255,148,47,0.15);
 }
 
+.selected {
+    background: #e6ffe6;
+}
 

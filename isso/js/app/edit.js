@@ -209,9 +209,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     // display selected comment in green and all others are set back to default
                     var comments = $(".isso-comment", null, false);
                     for (var i = 0; i < comments.length; i++) {
-                        comments[i].style.background = "transparent";
+                        comments[i].classList.remove("selected");
                     }
-                    el.style.background = "#e6ffe6";
+                    el.classList.add("selected");
 
                     // scroll to block then to first change
                     var edit_top = $("#edit");
@@ -233,7 +233,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
-                comments[i].style.background = "transparent";
+                comments[i].classList.remove("selected");
             }
             mode = "reading";
             currently_showing = null;
