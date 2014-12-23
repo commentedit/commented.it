@@ -275,6 +275,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
             },
             function() {
                 var del = $("a.delete", footer);
+                edit.show_original();
                 api.remove(comment.id).then(function(rv) {
                     if (rv) {
                         el.remove();

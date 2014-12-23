@@ -281,7 +281,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         },
         block_id: function() { return current_block.id; },
         cancel: cancel,
-        show: show_edit
+        show: show_edit,
+        show_original: show_original
     };
 });
 
