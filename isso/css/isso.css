@@ -15,6 +15,7 @@
     color: #555;
     font-weight: bold;
     margin: 10px 0;
+    text-align: right;
 }
 #isso-thread .textarea {
     min-height: 58px;
@@ -236,5 +237,5 @@
     ** i.e. in column mode */
     overflow: auto;
     height: calc(100% - 150px);
-    font-size: 0.75em;
+    font-size: 14px;
 }
