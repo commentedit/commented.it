@@ -14,6 +14,7 @@
 #isso-thread > h4 {
     color: #555;
     font-weight: bold;
+    margin: 10px 0;
 }
 #isso-thread .textarea {
     min-height: 58px;
@@ -25,8 +26,8 @@
 
 .isso-comment {
     max-width: 68em;
-    padding-top: 0.95em;
-    margin: 0.95em auto;
+    padding-top: 0.5em;
+    margin: 0.5em auto;
 }
 .isso-comment:not(:first-of-type),
 .isso-follow-up .isso-comment {
@@ -142,14 +143,15 @@
     position: relative;
     top: .2em;
 }
-.isso-comment .isso-postbox {
+.isso-comment {
     margin-top: 0.8em;
 }
 
 .isso-postbox {
     max-width: 68em;
-    margin: 0 auto 2em;
+    margin: 0 auto 0.5em;
 }
+
 .isso-postbox > .form-wrapper {
     display: block;
     padding: 0;
@@ -177,11 +179,12 @@
     margin: 0;
 }
 
-#isso-thread button {
+#isso-thread > button {
     cursor: pointer;
+    float: left;
 }
 
-#isso-thread button,
+#isso-thread > button,
 .isso-postbox > .form-wrapper > .auth-section .input-wrapper input {
     padding: .3em 10px;
     max-width: 100%;
@@ -232,5 +235,6 @@
     /* the following is useful only when position is fixed
     ** i.e. in column mode */
     overflow: auto;
-    height: calc(100% - 250px);
+    height: calc(100% - 150px);
+    font-size: 0.75em;
 }
