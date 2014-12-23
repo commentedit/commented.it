@@ -63,13 +63,13 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
             }).then(function(comment) {
                 $(".textarea", el).innerHTML = "";
                 $(".textarea", el).blur();
+                edit.cancel();
                 insert(comment, true);
 
                 if (parent !== null) {
                     el.onsuccess();
                 }
             });
-            edit.cancel();
         });
 
         lib.editorify($(".textarea", el));
