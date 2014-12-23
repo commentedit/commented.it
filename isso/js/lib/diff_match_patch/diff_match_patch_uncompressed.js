@@ -481,9 +481,6 @@ diff_match_patch.prototype.diff_bisectSplit_ = function(text1, text2, x, y,
  * @private
  */
 diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2, delimiters) {
-  // We wish to treat HTML tags as independent lines
-  delimiters += "<"
-
   var lineArray = [];  // e.g. lineArray[4] == 'Hello\n'
   var lineHash = {};   // e.g. lineHash['Hello\n'] == 4
 
@@ -510,17 +507,9 @@ diff_match_patch.prototype.diff_linesToChars_ = function(text1, text2, delimiter
     var lineArrayLength = lineArray.length;
 
     while (lineEnd < text.length - 1) {
-      if (text[lineStart] === '<') {
-        lineEnd = text.indexOf('>', lineStart);
-      }
-      else {
-        lineEnd = text.firstIndexOf(delimiters, lineStart);
-      }
+      lineEnd = text.firstIndexOf(delimiters, lineStart);
       if (lineEnd == -1) {
         lineEnd = text.length - 1;
-      }
-      else if (text[lineEnd] === '<') {
-        lineEnd--;
       }
       var line = text.substring(lineStart, lineEnd + 1);
       lineStart = lineEnd + 1;
