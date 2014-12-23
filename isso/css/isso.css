@@ -240,3 +240,11 @@
     height: calc(100% - 150px);
     font-size: 14px;
 }
+
+.clickable {
+    /* to highlight clickable comments */
+    cursor: pointer;
+    background: rgba(255,148,47,0.15);
+}
+
+
