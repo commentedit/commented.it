@@ -75,8 +75,6 @@ class Unofficial(misaka.HtmlRenderer):
     to <code class="$lang">, compatible with Highlight.js.
     """
 
-    flags = misaka.HTML_HARD_WRAP
-
     def block_code(self, text, lang):
         lang = ' class="{0}"'.format(lang) if lang else ''
         return "<pre><code{1}>{0}</code></pre>\n".format(text, lang)
