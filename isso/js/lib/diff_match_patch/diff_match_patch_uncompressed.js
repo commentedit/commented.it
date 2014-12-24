@@ -1275,12 +1275,12 @@ diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
  */
 diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
   // adapt because diffs can include html tags
-  var tag = /^<[^>]*>$/;
+  var tag = /^\s*<[^>]+>\s*$/;
   // also: add #id to first change
   var is_first_change = 1;
   var mark = function(open, text, close) {
     var output = [];
-    var text_and_tags = text.split(/(<[^>]*>)/);
+    var text_and_tags = text.split(/(<[^>]+>)/);
     for (var i = 0; i < text_and_tags.length; i++) {
       var current_text = text_and_tags[i];
       if (tag.test(current_text)) {
