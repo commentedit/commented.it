@@ -54,7 +54,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     // after decoding html entities
     // and after removing extra whitespace and new lines
     var getEditorContent = function() {
-        return utils.clean_html(he.decode(editor.getData()));
+        return utils.clean_html(editor.getData());
     };
 
     var getBlockContent = function() {
@@ -275,8 +275,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                 return null;
             }
             // otherwise we apply some pre-treatment before returning
-            var new_text = he.decode(new_content);
-            var splitted = dmp.diff_wordsToChars_(original_content, new_text);
+            var splitted = dmp.diff_wordsToChars_(original_content, new_content);
             var diffs = dmp.diff_main(splitted.chars1, splitted.chars2);
             dmp.diff_cleanupSemantic(diffs);
             dmp.diff_charsToLines_(diffs, splitted.wordArray);
