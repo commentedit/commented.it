@@ -278,8 +278,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             var new_text = he.decode(new_content);
             var splitted = dmp.diff_wordsToChars_(original_content, new_text);
             var diffs = dmp.diff_main(splitted.chars1, splitted.chars2);
-            dmp.diff_charsToLines_(diffs, splitted.wordArray);
             dmp.diff_cleanupSemantic(diffs);
+            dmp.diff_charsToLines_(diffs, splitted.wordArray);
             return JSON.stringify(diffs);
         },
         block_id: function() { return current_block.id; },
