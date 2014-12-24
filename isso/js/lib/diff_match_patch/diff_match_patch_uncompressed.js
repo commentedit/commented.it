@@ -1274,7 +1274,7 @@ diff_match_patch.prototype.diff_xIndex = function(diffs, loc) {
  */
 diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
   // adapt because diffs can include html tags
-  var tag = /(<\/?[a-zA-Z0-9 ]*\/?>)/;
+  var tag = /(<[^>]*>)/;
   // also: add #id to first change
   var is_first_change = 1;
   var mark = function(open, text, close) {
