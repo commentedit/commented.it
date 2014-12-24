@@ -525,6 +525,7 @@ diff_match_patch.prototype.diff_charsToLines_ = function(diffs, lineArray) {
 diff_match_patch.prototype.diff_wordsToChars_ = function(text1, text2) {
   var wordArray = [];  // e.g. wordArray[4] == 'Hello\n'
   var wordHash = {};   // e.g. wordHash['Hello\n'] == 4
+  var wordArrayLength = 0;
 
   // this regular expression matches punctuation, spaces and most html tags
   // and keep them in the splitted string
