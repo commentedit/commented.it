@@ -76,12 +76,35 @@ define(["app/i18n"], function(i18n) {
         return html.replace(/\n/g, "").replace(/\t/g, "");
     };
 
+    // Safari private browsing mode supports localStorage, but throws QUOTA_EXCEEDED_ERR
+    var localStorageImpl;
+    try {
+        localStorage.setItem("x", "y");
+        localStorage.removeItem("x");
+        localStorageImpl = localStorage;
+    } catch (ex) {
+        localStorageImpl = (function(storage) {
+            return {
+                setItem: function(key, val) {
+                    storage[key] = val;
+                },
+                getItem: function(key) {
+                    return typeof(storage[key]) !== 'undefined' ? storage[key] : null;
+                },
+                removeItem: function(key) {
+                    delete storage[key];
+                }
+            };
+        })({});
+    };
+
     return {
         cookie: cookie,
         pad: pad,
         ago: ago,
         text: text,
         detext: detext,
-        clean_html: clean_html
+        clean_html: clean_html,
+        localStorageImpl: localStorageImpl
     };
 });
