@@ -9,8 +9,6 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
     "use strict";
 
-    var comments = [];
-
     var Postbox = function(parent) {
 
         var localStorage = utils.localStorageImpl,
@@ -126,7 +124,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
         var el = $.htmlify(jade.render("comment", {"comment": comment}));
 
         // save in comment list
-        comments.push({"el": el, "block": comment.block});
+        edit.save_comment(el, comment.block);
 
         // highlight admin comments with an orange border
         if (comment.author === "admin") {
@@ -347,17 +345,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
     };
 
-    var show_block_comments = function(block_id) {
-        for (var i = 0 ; i < comments.block ; i++ ) {
-            comments[i].el.style.visibility =
-                (comments[i].block === block_id) ?
-                "visible" :
-                "hidden";
-        }
-    };
-
     return {
-        show_block_comments: show_block_comments,
         insert: insert,
         insert_loader: insert_loader,
         Postbox: Postbox

@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n", "app/utils", "app/isso", "he", "diff_match_patch"], function($, i18n, utils, isso, he) {
+define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function($, i18n, utils, he) {
 
     "use strict";
 
@@ -20,6 +20,9 @@ define(["app/dom", "app/i18n", "app/utils", "app/isso", "he", "diff_match_patch"
     var blocks = $(".block", article, false);
     // in the case there is no block, current_block will always represent the full article
     var current_block = article;
+
+    // we will also save the comment html elements and their associated block
+    var comments = [];
 
     var original_content, new_content;
 
@@ -144,6 +147,10 @@ define(["app/dom", "app/i18n", "app/utils", "app/isso", "he", "diff_match_patch"
 
     // FUNCTIONS TO SHOW COMMENTS / EDITS
 
+    var save_comment = function(el, block_id) {
+        comments.push({el: el, block: block_id});
+    };
+
     var show_block_comments = function() {
         // when showing an edit or commenting, the current block is locked
         // this function is useless if there are no blocks
@@ -154,7 +161,13 @@ define(["app/dom", "app/i18n", "app/utils", "app/isso", "he", "diff_match_patch"
             while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
             current_block = blocks[i - 1];
             highlight_current_block();
-            isso.show_block_comments();
+            // mask all comments that are not associated with the current block
+            for (var i = 0 ; i < comments.block ; i++ ) {
+                comments[i].el.style.visibility =
+                    (comments[i].block === block_id) ?
+                    "visible" :
+                    "hidden";
+            }
         }
     };
 
@@ -283,6 +296,7 @@ define(["app/dom", "app/i18n", "app/utils", "app/isso", "he", "diff_match_patch"
             return JSON.stringify(diffs);
         },
         block_id: function() { return current_block.id; },
+        save_comment: save_comment,
         cancel: cancel,
         show: show_edit,
         show_original: show_original
