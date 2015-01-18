@@ -162,7 +162,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             current_block = blocks[i - 1];
             highlight_current_block();
             // mask all comments that are not associated with the current block
-            for (var i = 0 ; i < comments.block ; i++ ) {
+            for (var i = 0 ; i < comments.length ; i++ ) {
                 comments[i].el.style.visibility =
                     (comments[i].block === block_id) ?
                     "visible" :
