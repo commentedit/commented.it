@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function($, i18n, utils, he) {
+define(["app/dom", "app/i18n", "app/utils", "app/isso", "he", "diff_match_patch"], function($, i18n, utils, isso, he) {
 
     "use strict";
 
@@ -154,6 +154,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
             current_block = blocks[i - 1];
             highlight_current_block();
+            isso.show_block_comments();
         }
     };
 
