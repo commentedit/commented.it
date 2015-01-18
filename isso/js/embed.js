@@ -3,7 +3,7 @@
  * Distributed under the MIT license
  */
 
-require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/count", "app/dom", "app/text/css", "app/text/svg", "app/jade"], function(domready, config, i18n, api, isso, count, $, css, svg, jade) {
+require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/edit", "app/count", "app/dom", "app/text/css", "app/text/svg", "app/jade"], function(domready, config, i18n, api, isso, edit, count, $, css, svg, jade) {
 
     "use strict";
 
@@ -49,6 +49,11 @@ require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/
                     }
                     count = count + comment.total_replies;
                 });
+
+                // now that all comments are inserted we can mask those
+                // which are not associated with the current block
+                edit.show_block_comments();
+
                 $("#isso-thread > h4").textContent = i18n.pluralize("num-comments", count);
 
                 if(rv.hidden_replies > 0) {

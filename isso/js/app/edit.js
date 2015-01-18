@@ -277,9 +277,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     original_button.style.visibility = "hidden";
     $("#isso-thread").prepend(original_button);
 
-    // FIRST CALLS
-    show_block_comments();
-
     // PUBLIC METHODS
 
     return {
@@ -297,6 +294,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         },
         block_id: function() { return current_block.id; },
         save_comment: save_comment,
+        show_block_comments: show_block_comments,
         cancel: cancel,
         show: show_edit,
         show_original: show_original
