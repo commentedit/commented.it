@@ -47,6 +47,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     // the block slider is used to choose which block is currently selected
     var current_position;
     var create_block_slider = function() {
+        // having a slider makes no sense with no blocks
+        if (blocks === null) { return null; }
+
         var slider = $.htmlify('<div id="slider"></div>');
         // slider position
         slider.style.left =
@@ -56,17 +59,24 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
         var cursor = $.htmlify('<div id="cursor"></div>');
         slider.append(cursor);
-
-        // define events on slider
-        var follow_mouse = function(e) {
+        // cursor position
+        var set_cursor_position = function(y) {
             var slider_rect = slider.getBoundingClientRect();
             var slider_height = slider_rect.bottom - slider_rect.top;
-            var raw_position = e.clientY - slider_rect.top - 10;
+            var raw_position = y - slider_rect.top - 10;
             var corrected_position =
                 (raw_position < 0) ?
                 0 : ((raw_position > slider_height - 20) ?
                      slider_height - 20 : raw_position);
             cursor.style.top = corrected_position + "px";
+        };
+
+        var first_block = blocks[0].getBoundingClientRect();
+        set_cursor_position((first_block.top + first_block.bottom) / 2);
+
+        // define events on slider
+        var follow_mouse = function(e) {
+            set_cursor_position(e.clientY);
         };
         cursor.addEventListener("mousedown", function(e) {
             document.addEventListener("mousemove", follow_mouse);
