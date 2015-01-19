@@ -46,7 +46,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     // the block slider is used to choose which block is currently selected
     var current_position;
-    var create_block_slider = function() {
+    (function() {
         // having a slider makes no sense with no blocks
         if (blocks === null) { return null; }
 
@@ -56,6 +56,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             ((article.getBoundingClientRect().right
               + $("#isso-thread").getBoundingClientRect().left) / 2
              - 10) + "px";
+        article.insertAfter(slider);
 
         var cursor = $.htmlify('<div id="cursor"></div>');
         slider.append(cursor);
@@ -85,9 +86,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         document.addEventListener("mouseup", function() {
             document.removeEventListener("mousemove", follow_mouse);
         });
-        
-        return slider;
-    };
+    })();
 
     // INITIALIZE LIBRARIES
 
@@ -345,7 +344,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         },
         block_id: function() { return current_block.id; },
         save_comment: save_comment,
-        block_slider: create_block_slider,
         show_block_comments: show_block_comments,
         cancel: cancel,
         show: show_edit,
