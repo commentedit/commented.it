@@ -1,12 +1,4 @@
 /*
- * Copyright Théo Zimmermann 2014
- * This Source Code Form is subject to the terms of the Mozilla Public
- * License, v. 2.0. If a copy of the MPL was not distributed with this
- * file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
- * The original copyright notice follows
- * (applies only to part of this source code):
-
  * Copyright 2014, Martin Zimmermann <info@posativ.org>. All rights reserved.
  * Distributed under the MIT license
  */
@@ -31,26 +23,15 @@ require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/
 
         count();
 
-        var isso_thread = $("#isso-thread");
-
-        if (isso_thread === null) {
+        if ($("#isso-thread") === null) {
             return console.log("abort, #isso-thread is missing");
         }
 
-        // original button is specific to commented.it and is hidden by default
-        var original_button = $.htmlify('<button id="original_button" type="button">' + i18n.translate("show-original") + '</button>');
-        original_button.style.visibility = "hidden";
+        $("#isso-thread").append($.new('h4'));
+        $("#isso-thread").append(new isso.Postbox(null));
+        $("#isso-thread").append('<div id="isso-root"></div>');
 
-        isso_thread.append(original_button);
-
-        // associated event
-        original_button.on("click", edit.show_original);
-
-        isso_thread.append($.new('h4'));
-        isso_thread.append(new isso.Postbox(null));
-        isso_thread.append('<div id="isso-root"></div>');
-
-        api.fetch(isso_thread.getAttribute("data-isso-id"),
+        api.fetch($("#isso-thread").getAttribute("data-isso-id"),
             config["max-comments-top"],
             config["max-comments-nested"]).then(
             function(rv) {

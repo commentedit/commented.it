@@ -26,6 +26,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     var original_content, new_content;
 
+    // button to show the original version
+    var original_button = $.htmlify('<button type="button">' + i18n.translate("show-original") + '</button>');
+
     // remember some of the DOM elements
     var cancel_button, comment_field;
 
@@ -215,7 +218,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     current_block.innerHTML = html;
 
                     // add button to go back to standard reading mode
-                    $("#original_button").style.visibility = "visible";
+                    original_button.style.visibility = "visible";
 
                     // display selected comment in green and all others are set back to default
                     var comments = $(".isso-comment", null, false);
@@ -241,7 +244,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         if (mode === "reading_modification") {
             // restore original display
             current_block.innerHTML = original_content;
-            $("#original_button").style.visibility = "hidden";
+            original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
                 comments[i].classList.remove("selected");
@@ -255,6 +258,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     // DEFINE EVENTS
 
+    original_button.on("click", show_original);
+
     // fallback if we cannot use CKEditor change event
     if (typeof CKEDITOR === "undefined") {
         article.on("keyup", maybe_article_just_changed);
@@ -267,6 +272,10 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     });
 
     window.addEventListener("scroll", show_block_comments);
+
+    // ADD HTML ELEMENTS
+    original_button.style.visibility = "hidden";
+    $("#isso-thread").prepend(original_button);
 
     // PUBLIC METHODS
 
