@@ -44,6 +44,35 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     // remember some of the DOM elements
     var cancel_button, comment_field;
 
+    // the block slider is used to choose which block is currently selected
+    var current_position;
+    var create_block_slider = function() {
+        var slider = $.htmlify('<div id="slider"></div>');
+        var cursor = $.htmlify('<div id="cursor"></div>');
+        slider.append(cursor);
+
+        // define events on slider
+        var follow_mouse = function(e) {
+            var slider_rect = slider.getBoundingClientRect();
+            var slider_height = slider_rect.bottom - slider_rect.top;
+            var raw_position = e.clientY - slider_rect.top - 10;
+            var corrected_position =
+                (raw_position < 0) ?
+                0 : ((raw_position > slider_height - 20) ?
+                     slider_height - 20 : raw_position);
+            cursor.style.top = corrected_position + "px";
+        };
+        cursor.addEventListener("mousedown", function(e) {
+            document.addEventListener("mousemove", follow_mouse);
+            e.preventDefault();
+        });
+        document.addEventListener("mouseup", function() {
+            document.removeEventListener("mousemove", follow_mouse);
+        });
+        
+        return slider;
+    };
+
     // INITIALIZE LIBRARIES
 
     // make a diff_match_patch object once and for all
@@ -300,6 +329,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         },
         block_id: function() { return current_block.id; },
         save_comment: save_comment,
+        block_slider: create_block_slider,
         show_block_comments: show_block_comments,
         cancel: cancel,
         show: show_edit,
