@@ -1,8 +1,29 @@
+/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+#slider {
+    position: relative;
+    top: 5px;
+    bottom: 5px;
+    overflow: none;
+}
+
+#slider > #cursor {
+    width: 0px;
+    height: 0px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 20px solid #b56767;
+    position: relative;
+}
+
 #isso-thread * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
+
 #isso-thread a {
     text-decoration: none;
 }
@@ -12,28 +33,13 @@
     margin: 0;
 }
 
-#isso-thread > #slider {
-    position: relative;
-    top: 5px;
-    bottom: 5px;
-    overflow: none;
-}
-
-#isso-thread > #slider > #cursor {
-    width: 0px;
-    height: 0px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 20px solid #b56767;
-    position: relative;
-}
-
 #isso-thread > h4 {
     color: #555;
     font-weight: bold;
     margin: 10px 0;
     text-align: right;
 }
+
 #isso-thread .textarea {
     min-height: 58px;
     outline: 0;
