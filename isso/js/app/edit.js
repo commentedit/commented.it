@@ -73,7 +73,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         };
 
         var first_block = blocks[0].getBoundingClientRect();
-        set_cursor_position((first_block.top + first_block.bottom) / 2);
+        setTimeout(function() {
+            set_cursor_position((first_block.top + first_block.bottom) / 2);
+        }, 0);
 
         // define events on slider
         var follow_mouse = function(e) {
