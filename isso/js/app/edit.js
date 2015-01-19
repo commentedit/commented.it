@@ -70,6 +70,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                 0 : ((raw_position > slider_height - 20) ?
                      slider_height - 20 : raw_position);
             cursor.style.top = corrected_position + "px";
+            // current_position is useful to determine the current block
+            current_position = y + slider_rect.top + 10;
         };
 
         var first_block = blocks[0].getBoundingClientRect();
@@ -87,6 +89,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         });
         document.addEventListener("mouseup", function() {
             document.removeEventListener("mousemove", follow_mouse);
+            show_block_comments();
         });
     })();
 
@@ -213,10 +216,12 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         // when showing an edit or commenting, the current block is locked
         // this function is useless if there are no blocks
         if (mode == "reading" && blocks !== null) {
-            // current block = block in the middle
-            var center = window.pageYOffset + window.innerHeight/2;
+            // current block = block at current_position
             var i = 0;
-            while (i < blocks.length && blocks[i].offsetTop <= center) { i++; }
+            while (i < blocks.length &&
+                   blocks[i].getBoundingClientRect().top <= current_position) {
+                i++;
+            }
             current_block = blocks[i - 1];
             highlight_current_block();
             // mask all comments that are not associated with the current block
