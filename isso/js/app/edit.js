@@ -27,7 +27,19 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var original_content, new_content;
 
     // button to show the original version
-    var original_button = $.htmlify('<button type="button">' + i18n.translate("show-original") + '</button>');
+    var original_button;
+    var create_original_button = function() {
+        if (typeof original_button === "undefined") {
+            original_button = $.htmlify(
+                '<button type="button">' +
+                i18n.translate("show-original") +
+                '</button>'
+            );
+            original_button.on("click", show_original);
+            original_button.style.visibility = "hidden";
+        }
+        return original_button;
+    };
 
     // remember some of the DOM elements
     var cancel_button, comment_field;
@@ -258,8 +270,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     // DEFINE EVENTS
 
-    original_button.on("click", show_original);
-
     // fallback if we cannot use CKEditor change event
     if (typeof CKEDITOR === "undefined") {
         article.on("keyup", maybe_article_just_changed);
@@ -272,10 +282,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     });
 
     window.addEventListener("scroll", show_block_comments);
-
-    // ADD HTML ELEMENTS
-    original_button.style.visibility = "hidden";
-    $("#isso-thread").prepend(original_button);
 
     // PUBLIC METHODS
 
@@ -297,6 +303,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         show_block_comments: show_block_comments,
         cancel: cancel,
         show: show_edit,
+        original_button: create_original_button,
         show_original: show_original
     };
 });
