@@ -48,6 +48,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var current_position;
     var create_block_slider = function() {
         var slider = $.htmlify('<div id="slider"></div>');
+        // slider position
+        slider.style.left = (article.getBoundingClientRect().right + 10) + "px";
+
         var cursor = $.htmlify('<div id="cursor"></div>');
         slider.append(cursor);
 

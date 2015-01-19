@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 #slider {
-    position: relative;
+    position: fixed;
     top: 5px;
     bottom: 5px;
     overflow: none;
