@@ -91,26 +91,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             document.removeEventListener("mousemove", follow_mouse);
             show_block_comments();
         });
-
-        // move cursor when scrolling to the top at the top or to the bottom
-        // at the bottom
-        // ie. when we are already at top or bottom AND scrolling had no effect
-        var previous_position = window.pageYOffset;
-        document.addEventListener("scroll", function() {
-            var new_position = window.pageYOffset;
-            if (new_position === previous_position) {
-                var max = document.documentElement.scrollHeight
-                          - window.innerHeight;
-                if (new_position >= max) {
-                    // we are at the bottom
-                    alert("bottom");
-                } else if (new_position <= 0) {
-                    // we are at the top
-                    alert("top");
-                }
-            }
-            previous_position = new_position;
-        });
     })();
 
     // INITIALIZE LIBRARIES
