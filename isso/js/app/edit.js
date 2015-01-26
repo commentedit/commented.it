@@ -171,9 +171,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                         }
                     });
                 }
-                else {
-                  cancel_button.style.display = "inline";
-                }
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
                                            && new_content === null) {
@@ -214,7 +211,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                 current_block.innerHTML = original_content;
                 new_content = null;
             }
-            cancel_button.hide();
             mode = "reading";
         }
     };
