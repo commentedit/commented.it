@@ -222,9 +222,9 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     };
 
     var show_block_comments = function() {
-        // when showing an edit or commenting, the current block is locked
+        // when commenting, the current block is locked
         // this function is useless if there are no blocks
-        if (mode == "reading" && blocks !== null) {
+        if (mode !== "commenting" && blocks !== null) {
             // current block = block at current_position
             var i = 0;
             while (i < blocks.length &&
