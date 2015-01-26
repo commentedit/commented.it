@@ -289,4 +289,11 @@ del {
     background: rgb(255,215,214);
 }
 
+.block {
+    padding: 3px 5px;
+}
 
+.current-block {
+    border: solid rgb(161,227,161);
+    background-color: rgb(251,251,251);
+}
