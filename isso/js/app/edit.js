@@ -42,7 +42,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     };
 
     // remember some of the DOM elements
-    var cancel_button, comment_field;
+    var auth_bar, cancel_button, comment_field;
 
     // the block slider is used to choose which block is currently selected
     var current_position;
@@ -154,6 +154,11 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                     });
                     editor.on("change", maybe_article_just_changed);
                 }
+                // show auth bar which contains submit and cancel buttons
+                if (typeof auth_bar === "undefined") {
+                    auth_bar = $(".auth-section");
+                }
+                auth_bar.style.visibility = "visible";
                 // first time : create cancel button and associate event
                 if (!cancel_button) {
                     cancel_button = $(".post-action", comment_postbox).prepend(
@@ -199,6 +204,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             if (typeof editor !== "undefined") {
                 editor.destroy();
             }
+            auth_bar.style.visibility = "hidden";
             current_block.setAttribute("contenteditable", false);
             // undo the highlighting
             // this way of doing it may conflict with the page own design

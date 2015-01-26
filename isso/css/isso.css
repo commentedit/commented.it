@@ -180,6 +180,11 @@
     display: block;
     padding: 0;
 }
+
+.isso-postbox > .form-wrapper > .auth-section {
+    visibility: hidden;
+}
+
 .isso-postbox > .form-wrapper > .auth-section,
 .isso-postbox > .form-wrapper > .auth-section .post-action {
     display: block;
