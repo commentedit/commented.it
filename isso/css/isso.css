@@ -29,8 +29,10 @@
 }
 
 #isso-thread {
-    padding: 0;
+    padding: 3px 5px;
     margin: 0;
+    border: solid rgb(153,217,234);
+    background-color: rgb(237,249,252);
 }
 
 #isso-thread > h4 {
