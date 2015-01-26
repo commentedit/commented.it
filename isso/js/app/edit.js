@@ -236,18 +236,16 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             // if current block changes, quit showing edit
             if (new_block !== current_block) {
                 show_original();
+            }
+            current_block = new_block;
 
-                current_block = new_block;
-
-                highlight_current_block();
-                // mask all comments that are not associated with the current block
-                for (var i = 0 ; i < comments.length ; i++ ) {
-                    comments[i].el.style.display =
-                       (comments[i].block === current_block.id) ?
-                        "block" :
-                        "none";
-                }
-                comments[0].parent.scrollTo(0,0);
+            highlight_current_block();
+            // mask all comments that are not associated with the current block
+            for (var i = 0 ; i < comments.length ; i++ ) {
+                comments[i].el.style.display =
+                    (comments[i].block === current_block.id) ?
+                    "block" :
+                    "none";
             }
         }
     };
