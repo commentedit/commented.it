@@ -222,8 +222,10 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     };
 
     var show_block_comments = function() {
-        // when commenting, the current block is locked
         // this function is useless if there are no blocks
+
+        var previous_block = current_block;
+        // when commenting, the current block is locked
         if (mode !== "commenting" && blocks !== null) {
             // current block = block at current_position
             var i = 0;
@@ -232,6 +234,12 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                 i++;
             }
             current_block = blocks[i - 1];
+
+            // if current block changes, quit showing edit
+            if (previous_block !== current_block) {
+                show_original();
+            }
+
             highlight_current_block();
             // mask all comments that are not associated with the current block
             for (var i = 0 ; i < comments.length ; i++ ) {
