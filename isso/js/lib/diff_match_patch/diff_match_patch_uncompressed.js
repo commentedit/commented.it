@@ -1318,13 +1318,13 @@ diff_match_patch.prototype.diff_prettyHtml = function(diffs) {
         // inserted html tags are simply used in the report
         html[x] = tag.test(text) ?
                     insert_edit_id_if_necessary() + text :
-                    mark('<ins style="background:#e6ffe6;">', text, '</ins>');
+                    mark('<ins>', text, '</ins>');
         break;
       case DIFF_DELETE:
         // deleted html tags are simply removed from report
         html[x] = tag.test(text) ?
                     insert_edit_id_if_necessary() :
-                    mark('<del style="background:#ffe6e6;">', text, '</del>');
+                    mark('<del>', text, '</del>');
         break;
       case DIFF_EQUAL:
         html[x] = text;
