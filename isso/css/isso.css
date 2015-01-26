@@ -14,7 +14,7 @@
     height: 0px;
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
-    border-right: 20px solid #b56767;
+    border-right: 20px solid rgb(153,217,234);
     position: relative;
 }
 
