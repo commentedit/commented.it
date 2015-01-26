@@ -109,9 +109,10 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
 
     var highlight_current_block = function() {
         for (var i = 0; i < blocks.length; i++) {
-            blocks[i].style.border = "none";
+            blocks[i].style.borderRight = "thick solid rgb(153,217,234)";
         }
         current_block.style.border = "thick solid rgb(153,217,234)";
+        current_block.style.borderRight = "none";
     };
 
     // content after CKEditor reformatting
