@@ -140,8 +140,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                 new_content = null;
                 current_block.setAttribute("contenteditable", true);
                 // highlight editable block
-                document.body.style.backgroundColor = "rgb(201,201,201)";
-                current_block.classList.add("editable");
+                document.body.classList.add("commenting");
+                current_block.classList.add("commenting");
                 if (typeof CKEDITOR !== "undefined") {
                     editor = CKEDITOR.inline(current_block);
                     editor.on("instanceReady", function() {
@@ -207,8 +207,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             current_block.setAttribute("contenteditable", false);
             // undo the highlighting
             // this way of doing it may conflict with the page own design
-            document.body.style.backgroundColor = "transparent";
-            current_block.classList.remove("editable");
+            document.body.classList.add("commenting");
+            current_block.classList.remove("commenting");
             if (new_content !== null) {
                 current_block.innerHTML = original_content;
                 new_content = null;

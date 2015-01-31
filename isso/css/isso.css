@@ -2,6 +2,10 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
+body.commenting {
+    background-color: rgb(201,201,201);
+}
+
 #slider {
     position: fixed;
     top: 5px;
@@ -33,6 +37,10 @@
     margin: 0;
     border: solid rgb(161,227,161);
     background-color: rgb(251,251,251);
+}
+
+#isso-thread.commenting {
+    background-color: rgb(201,201,201);
 }
 
 #isso-thread > h4 {
@@ -301,6 +309,6 @@ del {
 /* style for class editable follows current-block because
  * it prevails
  */
-.editable {
+.current-block.commenting {
     background-color: rgb(255,255,255);
 }
