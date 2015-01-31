@@ -140,8 +140,8 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
                 new_content = null;
                 current_block.setAttribute("contenteditable", true);
                 // highlight editable block
-                document.body.style.backgroundColor = "rgb(201,201,201)";
-                current_block.style.backgroundColor = "rgb(255,255,255)";
+                document.body.style.background = "rgb(201,201,201)";
+                current_block.style.background = "transparent";
                 if (typeof CKEDITOR !== "undefined") {
                     editor = CKEDITOR.inline(current_block);
                     editor.on("instanceReady", function() {
