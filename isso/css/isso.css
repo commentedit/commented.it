@@ -39,7 +39,7 @@ body.commenting {
     background-color: rgb(251,251,251);
 }
 
-#isso-thread.commenting {
+body.commenting #isso-thread {
     background-color: rgb(201,201,201);
 }
 
@@ -285,6 +285,12 @@ body.commenting {
     background: rgb(255,232,214);
 }
 
+/* these elements are not clickable in commenting mode */
+body.commenting .clickable {
+    cursor: default;
+    background: transparent;
+}
+
 .selected {
     background: rgb(203,242,203);
 }
@@ -306,9 +312,6 @@ del {
     background-color: rgb(251,251,251);
 }
 
-/* style for class editable follows current-block because
- * it prevails
- */
-.current-block.commenting {
+body.commenting .current-block {
     background-color: rgb(255,255,255);
 }
