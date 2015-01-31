@@ -26,9 +26,9 @@ function position(page_element_id, default_mode) {
         }
         page.style.marginLeft = "5%";
         isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
-        isso.style.right = "5%";
-        isso.style.top = "5%";
-        isso.style.bottom = "5%";
+        isso.style.right = "3%";
+        isso.style.top = "2%";
+        isso.style.bottom = "2%";
     };
 
     this.basic = function() {
