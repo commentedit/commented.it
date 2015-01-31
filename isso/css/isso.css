@@ -35,6 +35,9 @@ body:not(.commenting) #slider > #cursor {
 #isso-thread {
     padding: 3px 5px;
     margin: 0;
+}
+
+body:not(.commenting) #isso-thread {
     border: solid rgb(161,227,161);
     background-color: rgb(251,251,251);
 }
@@ -279,16 +282,10 @@ body.commenting #isso-thread {
     font-size: 14px;
 }
 
-.clickable {
+body:not(.commenting) .clickable {
     /* to highlight clickable comments */
     cursor: pointer;
     background: rgb(255,232,214);
-}
-
-/* these elements are not clickable in commenting mode */
-body.commenting .clickable {
-    cursor: default;
-    background: transparent;
 }
 
 .selected {
@@ -307,7 +304,7 @@ del {
     padding: 3px 5px;
 }
 
-.current-block {
+body:not(.commenting) .current-block {
     border: solid rgb(161,227,161);
     background-color: rgb(251,251,251);
 }
