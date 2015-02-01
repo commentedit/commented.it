@@ -13,13 +13,13 @@ If you can follow the instructions for installing from source on the official Is
 (http://posativ.org/isso/docs/install/#install-from-source and http://posativ.org/isso/docs/quickstart/),
 you should be able to install commented.it as well. Start with:
 ```
-git clone https://github.com/unkilodeplumes/commented.it
+git clone https://github.com/commentedit/commented.it
 ```
 Just note that the editable content on a page must be wrapped inside ```<article></article>``` tags.
 
 ###Specific step-by-step instructions for installing on OpenShift
 
-There is a [wiki page](https://github.com/unkilodeplumes/commented.it/wiki/How-to-install-on-OpenShift) containing detailed instructions for running
+There is a [wiki page](https://github.com/commentedit/commented.it/wiki/How-to-install-on-OpenShift) containing detailed instructions for running
 commented.it on OpenShift.
 If you just want it running somewhere without getting a headache, this might be just what you need.
 
