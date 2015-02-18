@@ -79,18 +79,6 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
             set_cursor_position((first_block.top + first_block.bottom) / 2);
         }, 0);
 
-        // define events on slider
-        var follow_mouse = function(e) {
-            set_cursor_position(e.clientY);
-        };
-        cursor.addEventListener("mousedown", function(e) {
-            document.addEventListener("mousemove", follow_mouse);
-            e.preventDefault();
-        });
-        document.addEventListener("mouseup", function() {
-            document.removeEventListener("mousemove", follow_mouse);
-            show_block_comments();
-        });
     })();
 
     // INITIALIZE LIBRARIES
