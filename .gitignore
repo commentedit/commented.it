@@ -6,6 +6,7 @@
 # *~
 
 *.pyc
+*.db
 .Python
 .sass-cache
 
@@ -13,6 +14,7 @@
 /include
 /lib
 /lib64
+/local
 /man
 /share
 /isso.egg-info/
