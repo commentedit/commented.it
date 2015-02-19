@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function($, i18n, utils, he) {
+define(["app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_match_patch"], function($, i18n, utils, slider, he) {
 
     "use strict";
 
@@ -45,41 +45,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
     var auth_bar, cancel_button, comment_field;
 
     // the block slider is used to choose which block is currently selected
-    var current_position;
-    (function() {
-        // having a slider makes no sense with no blocks
-        if (blocks === null) { return null; }
-
-        var slider = $.htmlify('<div id="slider"></div>');
-        // slider position
-        slider.style.left =
-            ((article.getBoundingClientRect().right
-              + $("#isso-thread").getBoundingClientRect().left) / 2
-             - 10) + "px";
-        article.insertAfter(slider);
-
-        var cursor = $.htmlify('<div id="cursor"></div>');
-        slider.append(cursor);
-        // cursor position
-        var set_cursor_position = function(y) {
-            var slider_rect = slider.getBoundingClientRect();
-            var slider_height = slider_rect.bottom - slider_rect.top;
-            var raw_position = y - slider_rect.top - 10;
-            var corrected_position =
-                (raw_position < 0) ?
-                0 : ((raw_position > slider_height - 20) ?
-                     slider_height - 20 : raw_position);
-            cursor.style.top = corrected_position + "px";
-            // current_position is useful to determine the current block
-            current_position = y + slider_rect.top + 10;
-        };
-
-        var first_block = blocks[0].getBoundingClientRect();
-        setTimeout(function() {
-            set_cursor_position((first_block.top + first_block.bottom) / 2);
-        }, 0);
-
-    })();
+    if (blocks !== null) { slider.init(blocks); }
 
     // INITIALIZE LIBRARIES
 
@@ -213,13 +179,7 @@ define(["app/dom", "app/i18n", "app/utils", "he", "diff_match_patch"], function(
         // this function is useless if there are no blocks
         // when commenting, the current block is locked
         if (mode !== "commenting" && blocks !== null) {
-            // current block = block at current_position
-            var i = 0;
-            while (i < blocks.length &&
-                   blocks[i].getBoundingClientRect().top <= current_position) {
-                i++;
-            }
-            var new_block = blocks[i - 1];
+            var new_block = slider.current_block();
 
             // if current block changes, quit showing edit
             if (new_block !== current_block) {
