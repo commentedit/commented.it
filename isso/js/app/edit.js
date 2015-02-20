@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_match_patch"], function($, i18n, utils, slider, he) {
+define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_match_patch"], function(jq, $, i18n, utils, slider, he) {
 
     "use strict";
 
