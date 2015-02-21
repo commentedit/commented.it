@@ -263,8 +263,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
             }
             mode = "reading";
             currently_showing = null;
-            // now show the current block like if we had just scrolled
-            show_block_comments();
         }
     };
 
