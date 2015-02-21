@@ -3,7 +3,7 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_match_patch"], function(jq, $, i18n, utils, slider, he) {
+define(["jquery", "app/i18n", "app/utils", "app/slider", "he", "diff_match_patch"], function($, i18n, utils, slider, he) {
 
     "use strict";
 
@@ -17,7 +17,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     // there must be only one <article> on the page
     var article = $("article");
     // but there can be many blocks in an article
-    var blocks = $(".block", article, false);
+    var blocks = article.children(".block");
     // in the case there is no block, current_block will always represent the full article
     var current_block = article;
 
@@ -30,13 +30,13 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     var original_button;
     var create_original_button = function() {
         if (typeof original_button === "undefined") {
-            original_button = $.htmlify(
+            original_button = $(
                 '<button type="button">' +
                 i18n.translate("show-original") +
                 '</button>'
             );
             original_button.on("click", show_original);
-            original_button.style.visibility = "hidden";
+            original_button.css("visibility", "hidden");
         }
         return original_button;
     };
@@ -66,28 +66,29 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     };
 
     var getBlockContent = function() {
-        return utils.clean_html(current_block.innerHTML);
+        return utils.clean_html(current_block.html());
     }
 
     // FUNCTIONS WHICH ENABLE COMMENTING AND EDITING
 
     var init = function(comment_postbox) {
-        comment_field = $(".textarea", comment_postbox);
+        postbox = $(comment_postbox);
+        comment_field = postbox.find(".textarea");
         // let's curry!
         return function() {
             show_original();
-            if (mode === "reading" && comment_field.innerHTML !== "") {
+            if (mode === "reading" && comment_field.html() !== "") {
                 mode = "commenting";
                 // when commenting, the current block is locked
-                if (blocks !== null) {
+                if (blocks.length) {
                     window.removeEventListener("scroll",
                                                slider.update_current_block);
                 }
                 original_content = getBlockContent();
                 new_content = null;
-                current_block.setAttribute("contenteditable", true);
+                current_block.attr("contenteditable", true);
                 // highlight editable block
-                document.body.classList.add("commenting");
+                $("body").addClass("commenting");
                 if (typeof CKEDITOR !== "undefined") {
                     editor = CKEDITOR.inline(current_block);
                     editor.on("instanceReady", function() {
@@ -106,21 +107,21 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                 if (typeof auth_bar === "undefined") {
                     auth_bar = $(".auth-section");
                 }
-                auth_bar.style.visibility = "visible";
+                auth_bar.css("visibility", "visible");
                 // first time : create cancel button and associate event
                 if (!cancel_button) {
-                    cancel_button = $(".post-action", comment_postbox).prepend(
+                    cancel_button = postbox.find(".post-action").prepend(
                       '<input type="reset" value="' + i18n.translate("postbox-cancel") + '"></input>');
                     cancel_button.on("click", function(e) {
                         if (new_content === null ||
                             confirm(i18n.translate("postbox-confirm-cancel"))) {
-                            comment_field.innerHTML = "";
+                            comment_field.html("");
                             cancel();
                         }
                     });
                 }
             }
-            else if (mode === "commenting" && comment_field.innerHTML === ""
+            else if (mode === "commenting" && comment_field.html() === ""
                                            && new_content === null) {
                 cancel();
             }
@@ -136,8 +137,8 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         }
         else {
             new_content = null;
-            if (comment_field.innerHTML === i18n.translate("postbox-text") ||
-                comment_field.innerHTML === "") {
+            if (comment_field.html() === i18n.translate("postbox-text") ||
+                comment_field.html() === "") {
                 current_block.blur();
                 cancel();
             }
@@ -149,17 +150,17 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
             if (typeof editor !== "undefined") {
                 editor.destroy();
             }
-            auth_bar.style.visibility = "hidden";
-            current_block.setAttribute("contenteditable", false);
+            auth_bar.css("visibility", "hidden");
+            current_block.attr("contenteditable", false);
             // undo the highlighting
             // this way of doing it may conflict with the page own design
-            document.body.classList.remove("commenting");
+            document.body.removeClass("commenting");
             if (new_content !== null) {
-                current_block.innerHTML = original_content;
+                current_block.html(original_content);
                 new_content = null;
             }
             // while commenting, the current block was locked
-            if (blocks !== null) {
+            if (blocks.length) {
                 window.addEventListener("scroll",slider.update_current_block);
             }
             mode = "reading";
@@ -197,14 +198,14 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     // exists or that there is no associated block simply
                     // because the page has no blocks
                     if (comment.block === "") {
-                        if (blocks !== null) { return; }
+                        if (blocks.length) { return; }
                     }
                     else {
-                        if (blocks === null) { return; }
+                        if (!blocks.length) { return; }
                     //    var i = 0;
                     //    while (
                     //        i < blocks.length &&
-                    //        blocks[i].id !== comment.block
+                    //        blocks[i].attr('id') !== comment.block
                     //    ) { i++; }
                     //    if (i === blocks.length) { return; }
                     //    current_block = blocks[i];
@@ -217,7 +218,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     }
                     //else if (previous_block !== current_block) {
                         // restore original content for previous block
-                    //    previous_block.innerHTML = original_content;
+                    //    previous_block.html(original_content);
                     //    original_content = getBlockContent();
                     //}
 
@@ -227,26 +228,24 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     // print diffs
                     var array = JSON.parse(he.decode(comment.edit));
                     var html = dmp.diff_prettyHtml(array);
-                    current_block.innerHTML = html;
+                    current_block.html(html);
 
                     // add button to go back to standard reading mode
-                    original_button.style.visibility = "visible";
+                    original_button.css("visibility", "visible");
 
                     // display selected comment in green and all others are set back to default
-                    var comments = $(".isso-comment", null, false);
-                    for (var i = 0; i < comments.length; i++) {
-                        comments[i].classList.remove("selected");
-                    }
-                    el.classList.add("selected");
+                    var comments = $(".isso-comment");
+                    comments.removeClass("selected");
+                    el.addClass("selected");
 
                     // scroll to block then to first change
-                    var edit_top = $("#edit");
-                    if (!edit_top.topIsVisible()) {
-                        current_block.scrollIntoView();
-                    }
-                    if (!edit_top.topIsVisible()) {
-                        edit_top.scrollIntoView();
-                    }
+                    //var edit_top = $("#edit");
+                    //if (!edit_top.topIsVisible()) {
+                    //    current_block.scrollIntoView();
+                    //}
+                    //if (!edit_top.topIsVisible()) {
+                    //    edit_top.scrollIntoView();
+                    //}
                 }
             }
         };
@@ -255,12 +254,10 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     var show_original = function() {
         if (mode === "reading_modification") {
             // restore original display
-            current_block.innerHTML = original_content;
-            original_button.style.visibility = "hidden";
-            var comments = $(".isso-comment", null, false);
-            for (var i = 0; i < comments.length; i++) {
-                comments[i].classList.remove("selected");
-            }
+            current_block.html(original_content);
+            original_button.css("visibility", "hidden");
+            var comments = $(".isso-comment");
+            comments.removeClass("selected");
             mode = "reading";
             currently_showing = null;
         }
@@ -280,7 +277,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     });
 
     // the block slider is used to choose which block is currently selected
-    if (blocks !== null) {
+    if (blocks.length) {
         slider.init(blocks, show_original, show_block_comments);
         window.addEventListener("scroll", slider.update_current_block);
     }
