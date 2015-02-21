@@ -44,9 +44,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     // remember some of the DOM elements
     var auth_bar, cancel_button, comment_field;
 
-    // the block slider is used to choose which block is currently selected
-    if (blocks !== null) { slider.init(blocks); }
-
     // INITIALIZE LIBRARIES
 
     // make a diff_match_patch object once and for all
@@ -60,15 +57,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     var editor;
 
     // AUXILIARY FUNCTIONS
-
-    var highlight_current_block = function() {
-        for (var i = 0; i < blocks.length; i++) {
-            if (blocks[i].classList.contains("current-block")) {
-                blocks[i].classList.remove("current-block");
-            }
-        }
-        current_block.classList.add("current-block");
-    };
 
     // content after CKEditor reformatting
     // after decoding html entities
@@ -90,6 +78,11 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
             show_original();
             if (mode === "reading" && comment_field.innerHTML !== "") {
                 mode = "commenting";
+                // when commenting, the current block is locked
+                if (blocks !== null) {
+                    window.removeEventListener("scroll",
+                                               slider.update_current_block);
+                }
                 original_content = getBlockContent();
                 new_content = null;
                 current_block.setAttribute("contenteditable", true);
@@ -165,6 +158,10 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                 current_block.innerHTML = original_content;
                 new_content = null;
             }
+            // while commenting, the current block was locked
+            if (blocks !== null) {
+                window.addEventListener("scroll",slider.update_current_block);
+            }
             mode = "reading";
         }
     };
@@ -175,26 +172,14 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         comments.push({el: el, block: block_id});
     };
 
-    var show_block_comments = function() {
-        // this function is useless if there are no blocks
-        // when commenting, the current block is locked
-        if (mode !== "commenting" && blocks !== null) {
-            var new_block = slider.current_block();
-
-            // if current block changes, quit showing edit
-            if (new_block !== current_block) {
-                show_original();
-            }
-            current_block = new_block;
-
-            highlight_current_block();
-            // mask all comments that are not associated with the current block
-            for (var i = 0 ; i < comments.length ; i++ ) {
-                comments[i].el.style.display =
-                    (comments[i].block === current_block.id) ?
-                    "block" :
-                    "none";
-            }
+    // mask all comments that are not associated with the current block
+    var show_block_comments = function(new_block) {
+        current_block = new_block;
+        for (var i = 0 ; i < comments.length ; i++ ) {
+            comments[i].el.style.display =
+                (comments[i].block === current_block.id) ?
+                "block" :
+                "none";
         }
     };
 
@@ -206,7 +191,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     show_original();
                 }
                 else {
-                    var previous_block = current_block;
+                    //var previous_block = current_block;
 
                     // first check that the block associated with the comment
                     // exists or that there is no associated block simply
@@ -216,25 +201,25 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     }
                     else {
                         if (blocks === null) { return; }
-                        var i = 0;
-                        while (
-                            i < blocks.length &&
-                            blocks[i].id !== comment.block
-                        ) { i++; }
-                        if (i === blocks.length) { return; }
-                        current_block = blocks[i];
-                        highlight_current_block();
+                    //    var i = 0;
+                    //    while (
+                    //        i < blocks.length &&
+                    //        blocks[i].id !== comment.block
+                    //    ) { i++; }
+                    //    if (i === blocks.length) { return; }
+                    //    current_block = blocks[i];
+                    //    highlight_current_block();
                     }
 
                     // save original content for later if it was not already
                     if (mode === "reading") {
                         original_content = getBlockContent();
                     }
-                    else if (previous_block !== current_block) {
+                    //else if (previous_block !== current_block) {
                         // restore original content for previous block
-                        previous_block.innerHTML = original_content;
-                        original_content = getBlockContent();
-                    }
+                    //    previous_block.innerHTML = original_content;
+                    //    original_content = getBlockContent();
+                    //}
 
                     mode = "reading_modification";
                     currently_showing = comment.id;
@@ -296,7 +281,11 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         }
     });
 
-    window.addEventListener("scroll", show_block_comments);
+    // the block slider is used to choose which block is currently selected
+    if (blocks !== null) {
+        slider.init(blocks, show_original, show_block_comments);
+        window.addEventListener("scroll", slider.update_current_block, show_block_comments);
+    }
 
     // PUBLIC METHODS
 

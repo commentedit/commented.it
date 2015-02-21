@@ -11,10 +11,15 @@ define(["app/dom"], function($) {
     var article = $("article");
     var blocks;
     var slider, cursor;
-    var current_position;
+    // current block = block at current_position of slider
+    var current_position, current_block;
+    var before, after; // functions
 
-    var init = function(b) {
-        blocks = b;
+    var init = function(blo,bef,aft) {
+        blocks = blo; // list of blocks
+        before = bef; // what to do before changing of current block
+        after = aft; // what to do after changing of current block
+        // after takes the new block as argument
 
         slider = $.htmlify('<div id="slider"></div>');
         // slider position
@@ -49,19 +54,36 @@ define(["app/dom"], function($) {
         current_position = y + slider_rect.top + 10;
     };
 
-    // current block = block at current_position of slider
-    var current_block = function() {
+    var update_current_block = function() {
         var i = 0;
         while (i < blocks.length &&
             blocks[i].getBoundingClientRect().top <= current_position) {
             i++;
         }
-        return blocks[i - 1];
+        var new_block = blocks[i - 1];
+        if (new_block !== current_block) {
+            // To do before updating block
+            before();
+            // To do after updating block
+            current_block = new_block;
+            highlight_current_block();
+            after(new_block);
+        }
+    };
+
+    var highlight_current_block = function() {
+        for (var i = 0; i < blocks.length; i++) {
+            if (blocks[i].classList.contains("current-block")) {
+                blocks[i].classList.remove("current-block");
+            }
+        }
+        current_block.classList.add("current-block");
     };
 
     return {
         init: init,
-        current_block: current_block
+        //current_block: function() { return current_block; },
+        update_current_block: update_current_block
     };
 
 });
