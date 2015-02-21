@@ -37,6 +37,7 @@ define(["app/dom"], function($) {
         // this is not good if block is is higher than the window
         setTimeout(function() {
             set_cursor_position((first_block.top + first_block.bottom) / 2);
+            update_current_block();
         }, 0);
     };
 
