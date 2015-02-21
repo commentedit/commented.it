@@ -302,7 +302,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         },
         block_id: function() { return current_block.id; },
         save_comment: save_comment,
-        show_block_comments: show_block_comments,
+        show_block_comments: slider.update_current_block,
         cancel: cancel,
         show: show_edit,
         original_button: create_original_button,
