@@ -67,7 +67,7 @@ define(["jquery"], function($) {
             // To do after updating block
             current_block = new_block;
             highlight_current_block();
-            after(new_block);
+            after(new_block[0]);
         }
     };
 
@@ -78,7 +78,6 @@ define(["jquery"], function($) {
 
     return {
         init: init,
-        //current_block: function() { return current_block; },
         update_current_block: update_current_block
     };
 
