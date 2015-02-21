@@ -9,14 +9,13 @@ define(["jquery"], function($) {
     // the block slider is used to choose which block is currently selected
 
     var article = $("article");
-    var blocks;
+    var blocks = article.find(".block");
     var slider, cursor;
     // current block = block at current_position of slider
     var current_position, current_block;
     var before, after; // functions
 
-    var init = function(blo,bef,aft) {
-        blocks = blo; // list of blocks
+    var init = function(bef,aft) {
         before = bef; // what to do before changing of current block
         after = aft; // what to do after changing of current block
         // after takes the new block as argument
