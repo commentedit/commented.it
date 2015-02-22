@@ -24,10 +24,10 @@ define(["jquery"], function($) {
         // slider position
         // there may be a better way (and we don't handle resizing for now)
         slider.css("left",
-            ((article.offset().right
+            ((article.offset().left + article.width()
               + $("#isso-thread").offset().left) / 2
              - 10) + "px");
-        article.insertAfter(slider);
+        slider.insertAfter(article);
 
         cursor = $('<div id="cursor"></div>');
         slider.append(cursor);
@@ -41,16 +41,16 @@ define(["jquery"], function($) {
 
     // cursor position
     var set_cursor_position = function(y) {
-        var slider_rect = slider.offset();
-        var slider_height = slider_rect.bottom - slider_rect.top;
-        var raw_position = y - slider_rect.top - 10;
+        var slider_top = slider.offset().top;
+        var slider_height = slider.height();
+        var raw_position = y - slider_top - 10;
         var corrected_position =
             (raw_position < 0) ?
             0 : ((raw_position > slider_height - 20) ?
                  slider_height - 20 : raw_position);
         cursor.css("top", corrected_position + "px");
         // current_position is useful to determine the current block
-        current_position = y + slider_rect.top + 10;
+        current_position = y + slider_top + 10;
     };
 
     var update_current_block = function() {
