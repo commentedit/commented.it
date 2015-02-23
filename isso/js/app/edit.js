@@ -282,7 +282,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     // the block slider is used to choose which block is currently selected
     if (blocks !== null) {
         slider.init(show_original, show_block_comments);
-        window.addEventListener("scroll", slider.update_current_block);
     }
 
     // PUBLIC METHODS

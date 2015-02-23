@@ -67,7 +67,8 @@ define(["jquery"], function($) {
         }
     };
 
-    var current_block_changed = function(new_block) { 
+    var current_block_changed = function(new_block) {
+        $(window).off("scroll");
         // To do before updating block
         before();
         // To do after updating block
@@ -77,6 +78,7 @@ define(["jquery"], function($) {
             scrollTop: new_block.offset().top - current_position/2
         }, 1000);
         after(new_block[0]);
+        $(window).scroll(update_current_block);
     };
 
     var highlight_current_block = function() {
@@ -85,6 +87,9 @@ define(["jquery"], function($) {
     };
 
     // define events
+
+    $(window).scroll(update_current_block);
+
     blocks.each(function() {
         $(this).on("click", function() {current_block_changed($(this))});
     });
