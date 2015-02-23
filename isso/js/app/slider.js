@@ -32,10 +32,10 @@ define(["jquery"], function($) {
         cursor = $('<div id="cursor"></div>');
         slider.append(cursor);
 
-        var first_block = blocks.offset();
         // this is not good if block is is higher than the window
         setTimeout(function() {
-            set_cursor_position((first_block.top + first_block.bottom) / 2);
+            // compute on first block
+            set_cursor_position(blocks.offset().top + blocks.height() / 2);
         }, 0);
     };
 
