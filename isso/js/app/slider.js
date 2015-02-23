@@ -84,6 +84,11 @@ define(["jquery"], function($) {
         current_block.addClass("current-block");
     };
 
+    // define events
+    blocks.each(function() {
+        $(this).on("click", function() {current_block_changed($(this))});
+    });
+
     return {
         init: init,
         update_current_block: update_current_block
