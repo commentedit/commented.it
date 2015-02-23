@@ -63,16 +63,20 @@ define(["jquery"], function($) {
         var new_block = blocks.eq(i - 1);
         if (typeof(current_block) === "undefined" ||
             new_block.attr('id') !== current_block.attr('id')) {
-            // To do before updating block
-            before();
-            // To do after updating block
-            current_block = new_block;
-            highlight_current_block();
-            $('html,body').animate({
-                scrollTop: new_block.offset().top - current_position/2
-            }, 1000);
-            after(new_block[0]);
+            current_block_changed(new_block)
         }
+    };
+
+    var current_block_changed = function(new_block) { 
+        // To do before updating block
+        before();
+        // To do after updating block
+        current_block = new_block;
+        highlight_current_block();
+        $('html,body').animate({
+            scrollTop: new_block.offset().top - current_position/2
+        }, 1000);
+        after(new_block[0]);
     };
 
     var highlight_current_block = function() {
