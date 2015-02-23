@@ -56,7 +56,8 @@ define(["jquery"], function($) {
     var update_current_block = function() {
         var i = 0;
         while (i < blocks.length &&
-            blocks.eq(i).offset().top <= current_position) {
+            blocks.eq(i).offset().top - $(window).scrollTop()
+              <= current_position) {
             i++;
         }
         var new_block = blocks.eq(i - 1);
