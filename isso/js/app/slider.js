@@ -61,12 +61,16 @@ define(["jquery"], function($) {
             i++;
         }
         var new_block = blocks.eq(i - 1);
-        if (new_block !== current_block) {
+        if (typeof(current_block) === "undefined" ||
+            new_block.attr('id') !== current_block.attr('id')) {
             // To do before updating block
             before();
             // To do after updating block
             current_block = new_block;
             highlight_current_block();
+            $('html,body').animate({
+                scrollTop: new_block.offset().top - current_position/2
+            }, 1000);
             after(new_block[0]);
         }
     };
