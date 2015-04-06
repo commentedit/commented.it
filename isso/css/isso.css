@@ -302,7 +302,8 @@ del {
 
 .block {
     border: solid transparent;
-    padding: 3px 5px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 body:not(.commenting) .current-block {
