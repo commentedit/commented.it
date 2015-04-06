@@ -301,6 +301,7 @@ del {
 }
 
 .block {
+    border: solid transparent;
     padding: 3px 5px;
 }
 
