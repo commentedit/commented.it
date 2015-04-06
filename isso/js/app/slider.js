@@ -67,20 +67,22 @@ define(["jquery"], function($) {
         }
     };
 
-    var current_block_changed = function(new_block) {
+    var current_block_changed = function(new_block, smooth) {
         $(window).off("scroll");
         // To do before updating block
         before();
         // To do after updating block
         current_block = new_block;
         highlight_current_block();
-        $('html,body').animate({
-            scrollTop: new_block.offset().top - current_position/2
-        }, 1000);
+        if (smooth) {
+            $('html,body').animate({
+                scrollTop: new_block.offset().top - current_position/2
+            }, 1000);
+        }
         window.setTimeout(function() {
             after(new_block[0]);
             $(window).scroll(update_current_block);
-        }, 1000);
+        }, smooth ? 1000 : 0);
     };
 
     var highlight_current_block = function() {
@@ -93,7 +95,7 @@ define(["jquery"], function($) {
     $(window).scroll(update_current_block);
 
     blocks.each(function() {
-        $(this).on("click", function() {current_block_changed($(this))});
+        $(this).on("click", function() {current_block_changed($(this), true)});
     });
 
     return {
