@@ -77,8 +77,10 @@ define(["jquery"], function($) {
         $('html,body').animate({
             scrollTop: new_block.offset().top - current_position/2
         }, 1000);
-        after(new_block[0]);
-        $(window).scroll(update_current_block);
+        window.setTimeout(function() {
+            after(new_block[0]);
+            $(window).scroll(update_current_block);
+        }, 1000);
     };
 
     var highlight_current_block = function() {
