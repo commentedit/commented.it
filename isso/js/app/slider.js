@@ -12,52 +12,20 @@ define(["jquery"], function($) {
     var blocks = article.find(".block");
     var slider, cursor;
     // current block = block at current_position of slider
-    var current_position, current_block;
+    var current_block;
     var before, after; // functions
 
     var init = function(bef,aft) {
         before = bef; // what to do before changing of current block
         after = aft; // what to do after changing of current block
         // after takes the new block as argument
-
-        slider = $('<div id="slider"></div>');
-        // slider position
-        // there may be a better way (and we don't handle resizing for now)
-        slider.css("left",
-            ((article.offset().left + article.width()
-              + $("#isso-thread").offset().left) / 2
-             - 10) + "px");
-        slider.insertAfter(article);
-
-        cursor = $('<div id="cursor"></div>');
-        slider.append(cursor);
-
-        // this is not good if block is is higher than the window
-        setTimeout(function() {
-            // compute on first block
-            set_cursor_position(blocks.offset().top + blocks.height() / 2);
-        }, 0);
-    };
-
-    // cursor position
-    var set_cursor_position = function(y) {
-        var slider_top = slider.offset().top;
-        var slider_height = slider.height();
-        var raw_position = y - slider_top - 10;
-        var corrected_position =
-            (raw_position < 0) ?
-            0 : ((raw_position > slider_height - 20) ?
-                 slider_height - 20 : raw_position);
-        cursor.css("top", corrected_position + "px");
-        // current_position is useful to determine the current block
-        current_position = y + slider_top + 10;
     };
 
     var update_current_block = function() {
         var i = 0;
         while (i < blocks.length &&
             blocks.eq(i).offset().top - $(window).scrollTop()
-              <= current_position) {
+              <= $(window).height()/3) {
             i++;
         }
         var new_block = blocks.eq(i - 1);
@@ -76,7 +44,7 @@ define(["jquery"], function($) {
         highlight_current_block();
         if (smooth) {
             $('html,body').animate({
-                scrollTop: new_block.offset().top - current_position/2
+                scrollTop: new_block.offset().top - $(window).height()/6
             }, 1000);
         }
         window.setTimeout(function() {

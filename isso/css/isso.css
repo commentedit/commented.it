@@ -6,22 +6,6 @@ body.commenting {
     background-color: rgb(201,201,201);
 }
 
-#slider {
-    position: fixed;
-    top: 5px;
-    bottom: 5px;
-    overflow: none;
-}
-
-body:not(.commenting) #slider > #cursor {
-    width: 0px;
-    height: 0px;
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-right: 20px solid rgb(200,200,200);
-    position: relative;
-}
-
 #isso-thread * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
