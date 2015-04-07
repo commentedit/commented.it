@@ -300,14 +300,7 @@ del {
     background: rgb(255,215,214);
 }
 
-.block {
-    /*border: solid transparent;*/
-    padding-left: 15px;
-    padding-right: 15px;
-}
-
 body:not(.commenting) .current-block {
-    /*border: solid rgb(161,227,161);*/
     background-color: rgb(251,251,251);
 }
 
