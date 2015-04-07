@@ -24,11 +24,11 @@ function position(page_element_id, default_mode) {
             };
             page.addEventListener("transitionend", handler);
         }
-        page.style.marginLeft = "5%";
-        isso.style.left = "calc(" + page.clientWidth + "px + 10%)";
-        isso.style.right = "3%";
-        isso.style.top = "2%";
-        isso.style.bottom = "2%";
+        isso.style.left = page.getBoundingClientRect().left + page.clientWidth
+                          + 40 + "px";
+        isso.style.right = "10px";
+        isso.style.top = "10px";
+        isso.style.bottom = "10px";
     };
 
     this.basic = function() {
