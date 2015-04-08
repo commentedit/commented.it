@@ -12,8 +12,11 @@ function position(page_element_id, default_mode) {
     var page = document.getElementById(page_element_id);
     var isso = document.getElementById("isso-thread");
     var first_call = true;
+    var mode = "basic";
+    var that = this;
 
     this.column = function() {
+        mode = "column";
         if (first_call) {
             isso.style.position = "fixed";
         }
@@ -32,6 +35,7 @@ function position(page_element_id, default_mode) {
     };
 
     this.basic = function() {
+        mode = "basic";
         isso.style.position = "static";
         page.style.marginLeft = (window.innerWidth - page.clientWidth) / 2 + "px";
     };
@@ -46,6 +50,13 @@ function position(page_element_id, default_mode) {
     first_call = false;
 
     page.style.transition = "margin-left 1s";
+
+    // adapt at resize
+    window.addEventListener("resize", function() {
+        if (mode == "column") {
+            that.column();
+        }
+    });
 };
 
 
