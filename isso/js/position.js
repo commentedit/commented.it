@@ -28,10 +28,10 @@ function position(page_element_id, default_mode) {
             page.addEventListener("transitionend", handler);
         }
         isso.style.left = page.getBoundingClientRect().left + page.clientWidth
-                          + 40 + "px";
-        isso.style.right = "10px";
-        isso.style.top = "10px";
-        isso.style.bottom = "10px";
+                          + 10 + "px";
+        isso.style.right = "0px";
+        isso.style.top = "0px";
+        isso.style.bottom = "0px";
     };
 
     this.basic = function() {

@@ -19,10 +19,12 @@ body.commenting {
 #isso-thread {
     padding: 3px 5px 0;
     margin: 0;
+    border: solid transparent;
+    border-width: 20px 60px;
+    border-image: url("../images/border.png") 60 60 stretch;
 }
 
 body:not(.commenting) #isso-thread {
-    border: solid rgb(200,200,200);
     background-color: rgb(251,251,251);
 }
 
