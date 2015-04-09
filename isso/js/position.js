@@ -29,7 +29,7 @@ function position(page_element_id, default_mode) {
         }
         isso.style.left = page.getBoundingClientRect().left + page.clientWidth
                           + 10 + "px";
-        isso.style.right = "0px";
+        isso.style.right = "10px";
         isso.style.top = "0px";
         isso.style.bottom = "0px";
     };
