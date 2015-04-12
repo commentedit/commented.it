@@ -1,7 +1,4 @@
 div(class='isso-comment' id='isso-#{comment.id}')
-    if conf.avatar
-        div(class='avatar')
-            svg(data-hash='#{comment.hash}')
     div(class='text-wrapper')
         div(class='isso-comment-header' role='meta')
             if bool(comment.website)

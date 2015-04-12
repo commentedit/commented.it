@@ -141,10 +141,6 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
         // run once to activate
         refresh();
 
-        if (config["avatar"]) {
-            $("div.avatar > svg", el).replace(lib.identicons.generate(comment.hash, 4, 48));
-        }
-
         /* New comments are currently added to the top of the thread
         ** unless it is a response comment in which case it is added
         ** to the end of the sub-thread */
@@ -230,13 +226,9 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
                     text.append(textarea);
                 });
 
-                if (avatar !== null) {
-                    avatar.hide();
-                }
             },
             function(toggler) {
                 var textarea = $(".textarea", text);
-                var avatar = config["avatar"] ? $(".avatar", el, false)[0] : null;
 
                 if (! toggler.canceled && textarea !== null) {
                     if (utils.text(textarea.innerHTML).length < 3) {
