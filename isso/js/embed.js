@@ -29,15 +29,12 @@ require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/
             $("head").append(style);
         }
 
-        count();
-
         var isso_thread = $("#isso-thread");
         if (isso_thread === null) {
             return console.log("abort, #isso-thread is missing");
         }
 
         isso_thread.append(edit.original_button());
-        isso_thread.append($.new('h4'));
         isso_thread.append(new isso.Postbox(null));
         isso_thread.append('<div id="isso-root"></div>');
 
@@ -45,26 +42,18 @@ require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/
             config["max-comments-top"],
             config["max-comments-nested"]).then(
             function(rv) {
-                if (rv.total_replies === 0) {
-                    $("#isso-thread > h4").textContent = i18n.translate("no-comments");
-                    return;
-                }
 
                 var lastcreated = 0;
-                var count = rv.total_replies;
                 rv.replies.forEach(function(comment) {
                     isso.insert(comment, false);
                     if(comment.created > lastcreated) {
                         lastcreated = comment.created;
                     }
-                    count = count + comment.total_replies;
                 });
 
                 // now that all comments are inserted we can mask those
                 // which are not associated with the current block
                 edit.show_block_comments();
-
-                $("#isso-thread > h4").textContent = i18n.pluralize("num-comments", count);
 
                 if(rv.hidden_replies > 0) {
                     isso.insert_loader(rv, lastcreated);
