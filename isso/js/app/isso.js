@@ -13,9 +13,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
         var localStorage = utils.localStorageImpl,
             el = $.htmlify(jade.render("postbox", {
-            "author":  JSON.parse(localStorage.getItem("author")),
-            "email":   JSON.parse(localStorage.getItem("email")),
-            "website": JSON.parse(localStorage.getItem("website"))
+            "author":  JSON.parse(localStorage.getItem("author"))
         }));
 
         // callback on success (e.g. to toggle the reply button)
@@ -45,12 +43,10 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
             }
 
             var author = $("[name=author]", el).value || null,
-                email = $("[name=email]", el).value || null,
-                website = $("[name=website]", el).value || null;
+                email = null,
+                website = null;
 
             localStorage.setItem("author", JSON.stringify(author));
-            localStorage.setItem("email", JSON.stringify(email));
-            localStorage.setItem("website", JSON.stringify(website));
 
             api.create($("#isso-thread").getAttribute("data-isso-id"), {
                 author: author, email: email, website: website,
