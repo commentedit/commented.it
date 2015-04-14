@@ -24,14 +24,6 @@ body.commenting {
     border-image: url("../images/border.png") 60 60 60 200;
 }
 
-body:not(.commenting) #isso-thread {
-    background-color: rgb(251,251,251);
-}
-
-body.commenting #isso-thread {
-    background-color: rgb(201,201,201);
-}
-
 #isso-thread > h4 {
     color: #555;
     font-weight: bold;
@@ -284,6 +276,14 @@ ins {
 
 del {
     background: rgb(255,215,214);
+}
+
+body:not(.commenting) #isso-thread .textarea {
+    background-color: rgb(251,251,251);
+}
+
+body.commenting #isso-thread .textarea {
+    background-color: rgb(255,255,255);
 }
 
 body:not(.commenting) .current-block {
