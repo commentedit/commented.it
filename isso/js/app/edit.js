@@ -42,7 +42,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
     };
 
     // remember some of the DOM elements
-    var auth_bar, cancel_button, comment_field;
+    var comment_field, auth_bar;
 
     // INITIALIZE LIBRARIES
 
@@ -103,22 +103,10 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     editor.on("change", maybe_article_just_changed);
                 }
                 // show auth bar which contains submit and cancel buttons
-                if (typeof auth_bar === "undefined") {
+                if (!auth_bar) {
                     auth_bar = $(".auth-section");
                 }
                 auth_bar.style.visibility = "visible";
-                // first time : create cancel button and associate event
-                if (!cancel_button) {
-                    cancel_button = $(".post-action", comment_postbox).prepend(
-                      '<input type="reset" value="' + i18n.translate("postbox-cancel") + '"></input>');
-                    cancel_button.on("click", function(e) {
-                        if (new_content === null ||
-                            confirm(i18n.translate("postbox-confirm-cancel"))) {
-                            comment_field.innerHTML = "";
-                            cancel();
-                        }
-                    });
-                }
             }
             else if (mode === "commenting" && comment_field.innerHTML === ""
                                            && new_content === null) {
@@ -284,6 +272,14 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         slider.init(show_original, show_block_comments);
     }
 
+    var cancel_event = function() {
+        if (new_content === null ||
+            confirm(i18n.translate("postbox-confirm-cancel"))) {
+            comment_field.innerHTML = "";
+            cancel();
+        }
+    };
+ 
     // PUBLIC METHODS
 
     return {
@@ -303,6 +299,7 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         save_comment: save_comment,
         show_block_comments: slider.update_current_block,
         cancel: cancel,
+        cancel_event: cancel_event,
         show: show_edit,
         original_button: create_original_button,
         show_original: show_original

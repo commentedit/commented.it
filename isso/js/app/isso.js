@@ -69,6 +69,8 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
             });
         });
 
+        $("[type=reset]", el).on("click", edit.cancel_event);
+
         lib.editorify($(".textarea", el));
 
         return el;
