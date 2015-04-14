@@ -195,7 +195,7 @@ body.commenting {
 .isso-postbox > .form-wrapper > .auth-section .input-wrapper {
     display: inline-block;
     position: relative;
-    max-width: 20%;
+    max-width: 33%;
     margin: 0;
 }
 
@@ -218,10 +218,11 @@ body.commenting {
     display: inline-block;
     float: right;
     margin: 0;
-    max-width: 40%;
+    max-width: 66%;
 }
 .isso-postbox > .form-wrapper > .auth-section .post-action > input {
     padding: calc(.3em - 1px);
+    max-width: 50%;
     border-radius: 2px;
     border: 1px solid #CCC;
     background-color: #DDD;
