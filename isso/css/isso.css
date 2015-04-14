@@ -21,7 +21,7 @@ body.commenting {
     margin: 0;
     border: solid transparent;
     border-width: 20px 20px 20px 60px;
-    border-image: url("../images/border.png") 60 60 60 200;
+    border-image: url("../images/border.png") 30 30 30 90;
 }
 
 #isso-thread > h4 {
