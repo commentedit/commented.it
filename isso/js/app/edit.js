@@ -26,21 +26,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
 
     var original_content, new_content;
 
-    // button to show the original version
-    var original_button;
-    var create_original_button = function() {
-        if (typeof original_button === "undefined") {
-            original_button = $.htmlify(
-                '<button type="button">' +
-                i18n.translate("show-original") +
-                '</button>'
-            );
-            original_button.on("click", show_original);
-            original_button.style.visibility = "hidden";
-        }
-        return original_button;
-    };
-
     // remember some of the DOM elements
     var comment_field, auth_bar;
 
@@ -217,9 +202,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
                     var html = dmp.diff_prettyHtml(array);
                     current_block.innerHTML = html;
 
-                    // add button to go back to standard reading mode
-                    original_button.style.visibility = "visible";
-
                     // display selected comment in green and all others are set back to default
                     var comments = $(".isso-comment", null, false);
                     for (var i = 0; i < comments.length; i++) {
@@ -244,7 +226,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         if (mode === "reading_modification") {
             // restore original display
             current_block.innerHTML = original_content;
-            original_button.style.visibility = "hidden";
             var comments = $(".isso-comment", null, false);
             for (var i = 0; i < comments.length; i++) {
                 comments[i].classList.remove("selected");
@@ -301,7 +282,6 @@ define(["jquery", "app/dom", "app/i18n", "app/utils", "app/slider", "he", "diff_
         cancel: cancel,
         cancel_event: cancel_event,
         show: show_edit,
-        original_button: create_original_button,
         show_original: show_original
     };
 });

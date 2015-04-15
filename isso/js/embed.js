@@ -34,7 +34,6 @@ require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/
             return console.log("abort, #isso-thread is missing");
         }
 
-        isso_thread.append(edit.original_button());
         isso_thread.append(new isso.Postbox(null));
         isso_thread.append('<div id="isso-root"></div>');
 
