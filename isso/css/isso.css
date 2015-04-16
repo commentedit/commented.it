@@ -82,6 +82,19 @@ body.commenting {
 .isso-comment > div.text-wrapper > .isso-comment-header {
     font-size: 0.85em;
 }
+
+.isso-comment > div.text-wrapper > .isso-comment-header .left-comment-header {
+    float: left;
+}
+
+.isso-comment > div.text-wrapper > .isso-comment-header .right-comment-header {
+    float: right;
+}
+
+.isso-comment > div.text-wrapper > div.text {
+    clear: both;
+}
+
 .isso-comment > div.text-wrapper > .isso-comment-header .spacer {
     padding: 0 6px;
 }
@@ -261,7 +274,7 @@ body.commenting {
     font-size: 14px;
 }
 
-body:not(.commenting) div:not(.selected) .show-original {
+body:not(.commenting) .isso-comment:not(.selected) .show-original {
     /* Display show-edit link and mask show-original link */
     display: none;
 }
