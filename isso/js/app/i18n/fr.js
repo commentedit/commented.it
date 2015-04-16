@@ -19,12 +19,13 @@ define({
     "comment-queued": "Commentaire en attente de modération.",
     "comment-anonymous": "Anonyme",
     "comment-hidden": "1 caché\n{{ n }} cachés",
+    "comment-show-original": "Retour à la version actuelle",
+    "comment-show-edit": "Afficher la modification",
     "date-now": "À l'instant",
     "date-minute": "Il y a une minute\nIl y a {{ n }} minutes",
     "date-hour": "Il y a une heure\nIl y a {{ n }} heures ",
     "date-day": "Hier\nIl y a {{ n }} jours",
     "date-week": "Il y a une semaine\nIl y a {{ n }} semaines",
     "date-month": "Il y a un mois\nIl y a {{ n }} mois",
-    "date-year": "Il y a un an\nIl y a {{ n }} ans",
-    "show-original": "Afficher l'original"
+    "date-year": "Il y a un an\nIl y a {{ n }} ans"
 });

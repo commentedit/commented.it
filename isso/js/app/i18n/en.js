@@ -21,6 +21,8 @@ define({
     "comment-queued": "Comment in queue for moderation.",
     "comment-anonymous": "Anonymous",
     "comment-hidden": "{{ n }} Hidden",
+    "comment-show-original": "Back to current version",
+    "comment-show-edit": "Show edit",
 
     "date-now": "right now",
     "date-minute": "a minute ago\n{{ n }} minutes ago",
@@ -28,8 +30,6 @@ define({
     "date-day": "Yesterday\n{{ n }} days ago",
     "date-week": "last week\n{{ n }} weeks ago",
     "date-month": "last month\n{{ n }} months ago",
-    "date-year": "last year\n{{ n }} years ago",
-
-    "show-original": "Show original"
+    "date-year": "last year\n{{ n }} years ago"
 
 });

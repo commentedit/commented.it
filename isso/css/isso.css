@@ -261,14 +261,20 @@ body.commenting {
     font-size: 14px;
 }
 
-body:not(.commenting) .clickable {
-    /* to highlight clickable comments */
-    cursor: pointer;
-    background: rgb(255,232,214);
+body:not(.commenting) div:not(.selected) .show-original {
+    /* Display show-edit link and mask show-original link */
+    display: none;
 }
 
-.selected {
-    background: rgb(203,242,203);
+.selected .show-edit {
+    /* Display show-original link and mask show-edit link */
+    display: none;
+}
+
+body.commenting .show-original,
+body.commenting .show-edit {
+    /* Mask both links while commenting */
+    display: none;
 }
 
 ins {

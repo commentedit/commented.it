@@ -1,6 +1,7 @@
 div(class='isso-comment' id='isso-#{comment.id}')
     div(class='text-wrapper')
         div(class='isso-comment-header' role='meta')
+          div(class='left-comment-header')
             if bool(comment.website)
                 a(class='author' href='#{comment.website}' rel='nofollow')
                     = bool(comment.author) ? comment.author : i18n('comment-anonymous')
@@ -12,6 +13,11 @@ div(class='isso-comment' id='isso-#{comment.id}')
                 time(title='#{humanize(comment.created)}' datetime='#{datetime(comment.created)}')
             span(class='note')
                 = comment.mode == 2 ? i18n('comment-queued') : comment.mode == 4 ? i18n('comment-deleted') : ''
+
+          div(class='right-comment-header')
+            if bool(comment.edit)
+                a(class='show-edit' href='#') #{i18n('comment-show-edit')}
+                a(class='show-original' href='#') #{i18n('comment-show-original')}
 
         div(class='text')
             if comment.mode == 4
