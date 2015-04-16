@@ -81,6 +81,7 @@ body.commenting {
 }
 .isso-comment > div.text-wrapper > .isso-comment-header {
     font-size: 0.85em;
+    padding-right: 10px;
 }
 
 .isso-comment > div.text-wrapper > .isso-comment-header .left-comment-header {
@@ -290,12 +291,22 @@ body.commenting .show-edit {
     display: none;
 }
 
+.show-edit {
+    color: #a1e3a1;
+    font-weight: bold;
+}
+
+.show-original {
+    color: #e3a1a1;
+    font-weight: bold;
+}
+
 ins {
-    background: rgb(203,242,203);
+    background-color: #a1e3a1;
 }
 
 del {
-    background: rgb(255,215,214);
+    background-color: #e3a1a1;
 }
 
 body:not(.commenting) #isso-thread .textarea {
