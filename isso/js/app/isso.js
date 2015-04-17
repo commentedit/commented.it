@@ -326,11 +326,11 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
         }
 
-        // by clicking on the comment, a reader can see the associated edit
         if (comment.edit !== null) {
             // change cursor and background color to indicate that the comment is clickable
             el.classList.add("clickable");
-            el.addEventListener("click", edit.show(el, comment));
+            $("a.show-edit", header).on("click", edit.show(el, comment));
+            $("a.show-original", header).on("click", edit.show_original);
         }
 
     };
