@@ -139,19 +139,14 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
         // run once to activate
         refresh();
 
-        /* New comments are currently added to the top of the thread
-        ** unless it is a response comment in which case it is added
-        ** to the end of the sub-thread */
-
         var entrypoint;
         if (comment.parent === null) {
             entrypoint = $("#isso-root");
-            entrypoint.prepend(el);
         } else {
             entrypoint = $("#isso-" + comment.parent + " > .text-wrapper > .isso-follow-up");
-            entrypoint.append(el);
         }
 
+        entrypoint.append(el);
 
         if (scrollIntoView) {
             el.scrollIntoView();
