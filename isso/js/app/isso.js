@@ -102,7 +102,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
 
                     var lastcreated = 0;
                     rv.replies.forEach(function(commentObject) {
-                        insert(commentObject, false);
+                        insert(commentObject, true);
                         if(commentObject.created > lastcreated) {
                             lastcreated = commentObject.created;
                         }
@@ -309,7 +309,7 @@ define(["app/dom", "app/utils", "app/config", "app/api", "app/jade", "app/i18n",
         if(comment.hasOwnProperty('replies')) {
             var lastcreated = 0;
             comment.replies.forEach(function(replyObject) {
-                insert(replyObject, false);
+                insert(replyObject, true);
                 if(replyObject.created > lastcreated) {
                     lastcreated = replyObject.created;
                 }

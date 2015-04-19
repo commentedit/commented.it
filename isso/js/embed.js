@@ -44,7 +44,7 @@ require(["app/lib/ready", "app/config", "app/i18n", "app/api", "app/isso", "app/
 
                 var lastcreated = 0;
                 rv.replies.forEach(function(comment) {
-                    isso.insert(comment, false);
+                    isso.insert(comment, true);
                     if(comment.created > lastcreated) {
                         lastcreated = comment.created;
                     }
