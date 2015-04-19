@@ -310,7 +310,7 @@ del {
 }
 
 body:not(.commenting) #isso-thread .textarea {
-    background-color: rgb(251,251,251);
+    background-color: #F5F5F5;
 }
 
 body.commenting #isso-thread .textarea {
@@ -318,9 +318,13 @@ body.commenting #isso-thread .textarea {
 }
 
 body:not(.commenting) .current-block {
-    background-color: rgb(251,251,251);
+    background-color: #F5F5F5;
 }
 
 body.commenting .current-block {
     background-color: rgb(255,255,255);
+}
+
+.block {
+    padding: 0px 10px;
 }
